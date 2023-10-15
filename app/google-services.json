@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "446778464698",
+    "project_id": "sportsgear-bfa2c",
+    "storage_bucket": "sportsgear-bfa2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446778464698:android:76dbb970fd3732cff32583",
+        "android_client_info": {
+          "package_name": "com.sevvalozdamar.sportsgear"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkvethpQ2nAKlqDEa0Tw5ZDQ3x_AP_7Cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
