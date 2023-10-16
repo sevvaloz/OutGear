@@ -41,5 +41,4 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         }
     }
 
-
 }

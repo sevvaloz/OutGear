@@ -42,5 +42,4 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
         }
     }
 
-
 }
