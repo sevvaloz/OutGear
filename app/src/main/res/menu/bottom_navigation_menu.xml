@@ -1,0 +1,20 @@
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuHome"
+        android:icon="@drawable/asset_home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/menuSearch"
+        android:icon="@drawable/asset_search"
+        android:title="Search"/>
+    <item
+        android:id="@+id/menuCart"
+        android:icon="@drawable/asset_shopping_cart"
+        android:title="Cart"/>
+    <item
+        android:id="@+id/menuFavorites"
+        android:icon="@drawable/asset_favorite"
+        android:title="Favorites"/>
+</menu>

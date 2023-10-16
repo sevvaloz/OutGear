@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.sevvalozdamar.sportsgear"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.sevvalozdamar.sportsgear"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -86,5 +86,8 @@ dependencies {
     //firebase auth
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-auth-ktx")
+
+    //bottom navigation
+    implementation("com.google.android.material:material:1.10.0")
 
 }
