@@ -6,17 +6,24 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
-import com.sevvalozdamar.sportsgear.util.Firebase
-import com.sevvalozdamar.sportsgear.common.viewBinding
+import com.sevvalozdamar.sportsgear.utils.Firebase
+import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.databinding.FragmentSigninBinding
-import com.sevvalozdamar.sportsgear.util.Utility
+import com.sevvalozdamar.sportsgear.ui.signup.SignupFragmentDirections
+import com.sevvalozdamar.sportsgear.utils.Utility
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SigninFragment : Fragment(R.layout.fragment_signin) {
 
     private val binding by viewBinding(FragmentSigninBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Firebase.currentUser.let {
+            findNavController().navigate(SignupFragmentDirections.signupToHome())
+        }
 
         with(binding) {
             btnSignIn.setOnClickListener {
@@ -28,14 +35,14 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
                 }
             }
             txtToSignup.setOnClickListener {
-                findNavController().navigate(R.id.signin_to_signup)
+                findNavController().navigate(SigninFragmentDirections.signinToSignup())
             }
         }
     }
 
     private fun signIn(email: String, password: String) {
         Firebase.auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            findNavController().navigate(R.id.signin_to_home)
+            findNavController().navigate(SigninFragmentDirections.signinToHome())
         }.addOnFailureListener {
             Snackbar.make(requireView(), it.message.orEmpty(), 1000).show()
         }

@@ -1,4 +1,4 @@
-package com.sevvalozdamar.sportsgear.common
+package com.sevvalozdamar.sportsgear.utils
 
 import android.view.LayoutInflater
 import android.view.View

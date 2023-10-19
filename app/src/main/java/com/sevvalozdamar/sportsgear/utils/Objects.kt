@@ -1,4 +1,4 @@
-package com.sevvalozdamar.sportsgear.util
+package com.sevvalozdamar.sportsgear.utils
 
 import com.google.firebase.auth.FirebaseAuth
 
@@ -14,4 +14,5 @@ object Utility {
 
 object Firebase {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    var currentUser = auth.currentUser
 }

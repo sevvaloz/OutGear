@@ -6,11 +6,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.sevvalozdamar.sportsgear.R
-import com.sevvalozdamar.sportsgear.common.viewBinding
+import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.databinding.ActivityMainBinding
-import com.sevvalozdamar.sportsgear.util.hide
-import com.sevvalozdamar.sportsgear.util.show
+import com.sevvalozdamar.sportsgear.utils.hide
+import com.sevvalozdamar.sportsgear.utils.show
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)

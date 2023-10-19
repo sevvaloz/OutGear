@@ -1,4 +1,4 @@
-package com.sevvalozdamar.sportsgear.util
+package com.sevvalozdamar.sportsgear.utils
 
 import android.view.View
 
