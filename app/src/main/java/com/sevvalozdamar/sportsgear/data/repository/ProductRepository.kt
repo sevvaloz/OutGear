@@ -24,7 +24,7 @@ class ProductRepository(private val productService: ProductService) {
                 if(result?.status == 200){
                     productsLiveData.value = result.products.orEmpty()
                 } else {
-                    //return code 400
+                    Log.e("GETPRODUCTS", "code 400")
                 }
             }
 

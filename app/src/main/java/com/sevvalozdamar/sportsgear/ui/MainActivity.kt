@@ -8,8 +8,8 @@ import androidx.navigation.ui.NavigationUI
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.databinding.ActivityMainBinding
-import com.sevvalozdamar.sportsgear.utils.hide
-import com.sevvalozdamar.sportsgear.utils.show
+import com.sevvalozdamar.sportsgear.utils.gone
+import com.sevvalozdamar.sportsgear.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,11 +34,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.signupFragment,
                 R.id.detailFragment,
                 R.id.paymentFragment -> {
-                    binding.bottomNavigation.hide()
+                    binding.bottomNavigation.gone()
                 }
 
                 else -> {
-                    binding.bottomNavigation.show()
+                    binding.bottomNavigation.visible()
                 }
             }
         }
