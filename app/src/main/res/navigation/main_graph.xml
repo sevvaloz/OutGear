@@ -92,10 +92,8 @@
         tools:layout="@layout/fragment_payment" >
         <action
             android:id="@+id/payment_to_success"
-            app:destination="@id/successFragment" />
-        <action
-            android:id="@+id/payment_to_cart"
-            app:destination="@id/cartFragment" />
+            app:destination="@id/successFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/successFragment"
@@ -104,7 +102,8 @@
         tools:layout="@layout/fragment_success" >
         <action
             android:id="@+id/success_to_home"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"

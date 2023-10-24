@@ -12,7 +12,6 @@ import com.sevvalozdamar.sportsgear.databinding.ItemProductBinding
 import com.sevvalozdamar.sportsgear.utils.invisible
 import com.sevvalozdamar.sportsgear.utils.visible
 
-
 class ProductAdapter(
     private val onProductClick: (Int) -> Unit
 ) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffUtilCallBack()) {
@@ -33,20 +32,17 @@ class ProductAdapter(
 
         fun bind(product: Product) {
             with(binding) {
-
                 itemTitle.text = product.title
-                itemPrice.text = "$ " + product.price.toString()
+                itemPrice.text = "$ ${product.price}"
                 ratingBar.rating = product.rate.toFloat()
                 Glide.with(itemImage).load(product.imageOne).into(itemImage)
-
-                //product in sale
                 if(product.saleState){
-                    itemPrice.text = "$ " + product.salePrice.toString()
+                    itemPrice.text = "$ ${product.salePrice}"
                     itemOldPrice.text = product.price.toString()
                     itemOldPrice.paintFlags = itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     itemOldPrice.visible()
                 } else {
-                    itemPrice.text = "$ " + product.price.toString()
+                    itemPrice.text = "$ ${product.price}"
                     itemOldPrice.invisible()
                 }
 
@@ -65,5 +61,11 @@ class ProductAdapter(
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem == newItem
         }
+    }
+
+    private var saleProductList: List<Product>? = null
+    fun submitSaleProductList(products: List<Product>){
+        saleProductList = products.filter { it.saleState }
+        submitList(saleProductList)
     }
 }

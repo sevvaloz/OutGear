@@ -22,7 +22,7 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         super.onViewCreated(view, savedInstanceState)
 
         Firebase.currentUser.let {
-            findNavController().navigate(SignupFragmentDirections.signupToHome())
+            findNavController().navigate(SigninFragmentDirections.signinToHome())
         }
 
         with(binding) {

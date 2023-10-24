@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,19 +7,51 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/top_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/orange" />
+
+        <ImageView
+            android:id="@+id/iv_logout"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/asset_logout"
+            android:background="#00000000"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <TextView
             android:id="@+id/tv_sale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SALE"
+            android:text="S A L E"
+            android:textAlignment="center"
             android:textSize="20sp"
+            android:textColor="#6929DA"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_sales_product"
@@ -36,19 +68,27 @@
             android:id="@+id/tv_products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PRODUCTS"
+            android:text="P R O D U C T S"
+            android:textAlignment="center"
             android:textSize="20sp"
+            android:textColor="#6929DA"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_sales_product"/>
+            app:layout_constraintTop_toBottomOf="@+id/rv_sales_product" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_products"
             tools:listitem="@layout/item_product" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
