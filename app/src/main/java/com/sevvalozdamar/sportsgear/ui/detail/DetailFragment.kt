@@ -11,8 +11,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI.navigateUp
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentDetailBinding
+import com.sevvalozdamar.sportsgear.utils.Resource
+import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.invisible
 import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.utils.visible
@@ -39,25 +42,51 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
 
-    private fun observe(){
-        viewModel.productDetail.observe(viewLifecycleOwner){ product ->
-            with(binding){
-                itemTitle.text = product.title
-                itemDescription.text = product.description
-                itemCategory.text = product.category
-                itemPrice.text = "$ ${product.price}"
-                ratingBar.rating = product.rate.toFloat()
-                Glide.with(itemImage).load(product.imageOne).into(itemImage)
-                if(product.saleState){
-                    itemPrice.text = "$ ${product.salePrice}"
-                    itemOldPrice.text = product.price.toString()
-                    itemOldPrice.paintFlags = itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    itemOldPrice.visible()
-                } else {
-                    itemPrice.text = "$ ${product.price}"
-                    itemOldPrice.invisible()
+    private fun observe() {
+        viewModel.productDetail.observe(viewLifecycleOwner) {
+            binding.apply {
+                when (it) {
+                    Resource.Loading -> {
+                        progressBar.visible()
+                        cl.gone()
+                    }
+
+                    is Resource.Success -> {
+                        binding.progressBar.gone()
+                        cl.visible()
+
+                        itemTitle.text = it.data.title
+                        itemDescription.text = it.data.description
+                        itemCategory.text = it.data.category
+                        ratingBar.rating = it.data.rate.toFloat()
+                        Glide.with(itemImage).load(it.data.imageOne).into(itemImage)
+                        if (it.data.saleState) {
+                            itemPrice.text = "$${it.data.salePrice}"
+                            itemOldPrice.text = it.data.price.toString()
+                            itemOldPrice.paintFlags =
+                                itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                            itemOldPrice.visible()
+                        } else {
+                            itemPrice.text = "$${it.data.price}"
+                            itemOldPrice.invisible()
+                        }
+                    }
+
+                    is Resource.Fail -> {
+                        binding.progressBar.gone()
+                        cl.visible()
+                        Snackbar.make(requireView(), it.failMessage, 2000).show()
+                    }
+
+                    is Resource.Error -> {
+                        binding.progressBar.gone()
+                        cl.visible()
+                        Snackbar.make(requireView(), it.errorMessage, 2000).show()
+                    }
                 }
+
             }
+
         }
     }
 

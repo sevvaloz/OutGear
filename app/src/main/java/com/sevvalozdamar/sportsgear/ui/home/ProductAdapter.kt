@@ -33,16 +33,15 @@ class ProductAdapter(
         fun bind(product: Product) {
             with(binding) {
                 itemTitle.text = product.title
-                itemPrice.text = "$ ${product.price}"
                 ratingBar.rating = product.rate.toFloat()
                 Glide.with(itemImage).load(product.imageOne).into(itemImage)
                 if(product.saleState){
-                    itemPrice.text = "$ ${product.salePrice}"
+                    itemPrice.text = "$${product.salePrice}"
                     itemOldPrice.text = product.price.toString()
                     itemOldPrice.paintFlags = itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     itemOldPrice.visible()
                 } else {
-                    itemPrice.text = "$ ${product.price}"
+                    itemPrice.text = "$${product.price}"
                     itemOldPrice.invisible()
                 }
 
