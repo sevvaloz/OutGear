@@ -5,11 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.NavigationUI.navigateUp
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
@@ -27,7 +23,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val binding by viewBinding(FragmentDetailBinding::bind)
     private val viewModel by viewModels<DetailViewModel>()
     private val args by navArgs<DetailFragmentArgs>()
-    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,6 +54,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         itemDescription.text = it.data.description
                         itemCategory.text = it.data.category
                         ratingBar.rating = it.data.rate.toFloat()
+                        itemStock.text = "Hurry up! Only ${it.data.count} items left in stock."
                         Glide.with(itemImage).load(it.data.imageOne).into(itemImage)
                         if (it.data.saleState) {
                             itemPrice.text = "$${it.data.salePrice}"

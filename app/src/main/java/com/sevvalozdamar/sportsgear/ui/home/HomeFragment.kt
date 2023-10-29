@@ -1,5 +1,6 @@
 package com.sevvalozdamar.sportsgear.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -8,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentHomeBinding
-import com.sevvalozdamar.sportsgear.utils.Firebase
+import com.sevvalozdamar.sportsgear.ui.MainActivity
 import com.sevvalozdamar.sportsgear.utils.Resource
 import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.viewBinding
@@ -36,6 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         viewModel.getProducts()
         observeData()
+
     }
 
     private fun observeData() {
@@ -75,7 +77,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun signOut() {
-        Firebase.auth.signOut()
+        requireActivity().finish()
+        viewModel.signuot()
+        startActivity(Intent(requireActivity(), MainActivity::class.java))
     }
 
 }

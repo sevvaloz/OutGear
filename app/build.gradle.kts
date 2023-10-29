@@ -90,6 +90,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-auth-ktx")
 
+    //firebase firestore
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
     //bottom navigation
     implementation("com.google.android.material:material:1.10.0")
 
