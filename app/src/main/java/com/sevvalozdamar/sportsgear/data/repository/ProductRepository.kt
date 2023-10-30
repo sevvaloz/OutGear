@@ -1,40 +1,39 @@
 package com.sevvalozdamar.sportsgear.data.repository
 
-import androidx.lifecycle.MutableLiveData
-import com.sevvalozdamar.sportsgear.data.model.Product
+import com.sevvalozdamar.sportsgear.data.mapper.mapToProductUI
+import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.data.source.remote.ProductService
 import com.sevvalozdamar.sportsgear.utils.Resource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ProductRepository(private val productService: ProductService) {
 
-    var products = MutableLiveData<Resource<List<Product>>>()
-    var productDetail= MutableLiveData<Resource<Product>>()
-
-    suspend fun getProducts() {
-        products.value = Resource.Loading
+    suspend fun getProducts(): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
         try {
             val response = productService.getProducts().body()
-            if (response?.status == 200){
-                products.value = Resource.Success(response.products.orEmpty())
+
+            if (response?.status == 200) {
+                Resource.Success(response.products.orEmpty().mapToProductUI())
             } else {
-                products.value = Resource.Fail(response?.message.orEmpty())
+                Resource.Fail(response?.message.orEmpty())
             }
-        } catch (e: Exception){
-            products.value = Resource.Error(e.message.orEmpty())
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
         }
     }
 
-    suspend fun getProductDetail(id: Int) {
-         productDetail.value = Resource.Loading
+    suspend fun getProductDetail(id: Int): Resource<ProductUI> = withContext(Dispatchers.IO) {
         try {
             val response = productService.getProductDetail(id).body()
-            if (response?.status == 200 && response.product != null) {
-                productDetail.value = Resource.Success(response.product)
+
+            if ((response?.status == 200) && (response.product != null)) {
+                Resource.Success(response.product.mapToProductUI())
             } else {
-                products.value = Resource.Fail(response?.message.orEmpty())
+                Resource.Fail(response?.message.orEmpty())
             }
-        } catch (e: Exception){
-            products.value = Resource.Error(e.message.orEmpty())
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
         }
     }
 

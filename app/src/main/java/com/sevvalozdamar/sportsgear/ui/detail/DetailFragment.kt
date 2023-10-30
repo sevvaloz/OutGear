@@ -7,7 +7,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentDetailBinding
 import com.sevvalozdamar.sportsgear.utils.Resource
@@ -34,55 +33,59 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             val fragmentManager = requireActivity().supportFragmentManager
             fragmentManager.popBackStack()
         }
+
     }
 
-
     private fun observe() {
-        viewModel.productDetail.observe(viewLifecycleOwner) {
+        viewModel.detailState.observe(viewLifecycleOwner) { state ->
             binding.apply {
-                when (it) {
-                    Resource.Loading -> {
+                when (state) {
+                    DetailState.Loading -> {
                         progressBar.visible()
                         cl.gone()
+                        clFail.gone()
                     }
 
-                    is Resource.Success -> {
+                    is DetailState.SuccessScreen -> {
                         binding.progressBar.gone()
+                        clFail.gone()
                         cl.visible()
 
-                        itemTitle.text = it.data.title
-                        itemDescription.text = it.data.description
-                        itemCategory.text = it.data.category
-                        ratingBar.rating = it.data.rate.toFloat()
-                        itemStock.text = "Hurry up! Only ${it.data.count} items left in stock."
-                        Glide.with(itemImage).load(it.data.imageOne).into(itemImage)
-                        if (it.data.saleState) {
-                            itemPrice.text = "$${it.data.salePrice}"
-                            itemOldPrice.text = it.data.price.toString()
+                        itemTitle.text = state.product.title
+                        itemDescription.text = state.product.description
+                        itemCategory.text = "${state.product.category}"
+                        itemRate.text = "(${state.product.rate})"
+                        ratingBar.rating = state.product.rate.toFloat()
+                        itemStock.text = "${state.product.count} items left in stock."
+                        Glide.with(itemImage).load(state.product.imageOne).into(itemImage)
+                        if (state.product.saleState) {
+                            itemPrice.text = "$${state.product.salePrice}"
+                            itemOldPrice.text = state.product.price.toString()
                             itemOldPrice.paintFlags =
                                 itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                             itemOldPrice.visible()
                         } else {
-                            itemPrice.text = "$${it.data.price}"
+                            itemPrice.text = "$${state.product.price}"
                             itemOldPrice.invisible()
                         }
                     }
 
-                    is Resource.Fail -> {
+                    is DetailState.EmptyScreen -> {
                         binding.progressBar.gone()
-                        cl.visible()
-                        Snackbar.make(requireView(), it.failMessage, 2000).show()
+                        cl.gone()
+                        clFail.visible()
+                        tvFail.text = state.failMessage
                     }
 
-                    is Resource.Error -> {
+                    is DetailState.PopUpScreen -> {
                         binding.progressBar.gone()
-                        cl.visible()
-                        Snackbar.make(requireView(), it.errorMessage, 2000).show()
+                        cl.gone()
+                        clFail.visible()
+                        //POP UP GOSTER
+                        //tvFail.text = state.errorMessage
                     }
                 }
-
             }
-
         }
     }
 

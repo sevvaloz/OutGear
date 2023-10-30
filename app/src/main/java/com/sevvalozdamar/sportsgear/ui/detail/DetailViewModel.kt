@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sevvalozdamar.sportsgear.data.model.Product
+import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.data.repository.ProductRepository
+import com.sevvalozdamar.sportsgear.ui.home.HomeState
 import com.sevvalozdamar.sportsgear.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,15 +17,24 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(private val productRepository: ProductRepository) :
     ViewModel() {
 
-    private var _productDetail = MutableLiveData<Resource<Product>>()
-    val productDetail: LiveData<Resource<Product>> get() = _productDetail
-
-    init {
-        _productDetail = productRepository.productDetail
-    }
+    private var _detailState = MutableLiveData<DetailState>()
+    val detailState: LiveData<DetailState> get() = _detailState
 
     fun getProductDetail(id: Int) = viewModelScope.launch{
-        productRepository.getProductDetail(id)
+        _detailState.value = DetailState.Loading
+        _detailState.value = when (val result = productRepository.getProductDetail(id)) {
+            Resource.Loading ->  DetailState.Loading
+            is Resource.Success -> DetailState.SuccessScreen(result.data)
+            is Resource.Fail -> DetailState.EmptyScreen(result.failMessage)
+            is Resource.Error -> DetailState.PopUpScreen(result.errorMessage)
+        }
     }
 
+}
+
+sealed interface DetailState {
+    object Loading : DetailState
+    data class SuccessScreen(val product: ProductUI) : DetailState
+    data class PopUpScreen(val errorMessage: String) : DetailState
+    data class EmptyScreen(val failMessage: String) : DetailState
 }

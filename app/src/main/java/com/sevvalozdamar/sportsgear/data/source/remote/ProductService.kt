@@ -2,7 +2,6 @@ package com.sevvalozdamar.sportsgear.data.source.remote
 
 import com.sevvalozdamar.sportsgear.data.model.ProductDetailResponse
 import com.sevvalozdamar.sportsgear.data.model.ProductResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

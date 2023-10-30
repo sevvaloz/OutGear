@@ -11,7 +11,7 @@
         android:title="Search"/>
     <item
         android:id="@+id/cartFragment"
-        android:icon="@drawable/asset_shopping_cart"
+        android:icon="@drawable/asset_shopping_cart_menu"
         android:title="Cart"/>
     <item
         android:id="@+id/favoritesFragment"

@@ -29,12 +29,16 @@ class SignupViewModel @Inject constructor(
     fun signUpWithEmailAndPassword(user: User, password: String) {
         viewModelScope.launch {
             _result.value =
-            try {
-                Resource.Loading
-                Resource.Success(firebaseAuthenticator.signupWithEmailAndPassword(user, password))
-            } catch (e: Exception) {
-                Resource.Error(e.toString())
-            }
+                try {
+                    Resource.Success(
+                        firebaseAuthenticator.signupWithEmailAndPassword(
+                            user,
+                            password
+                        )
+                    )
+                } catch (e: Exception) {
+                    Resource.Error(e.toString())
+                }
         }
     }
 

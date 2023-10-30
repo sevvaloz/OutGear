@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentHomeBinding
 import com.sevvalozdamar.sportsgear.ui.MainActivity
-import com.sevvalozdamar.sportsgear.utils.Resource
 import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.utils.visible
@@ -35,37 +33,43 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 signOut()
             }
         }
+
         viewModel.getProducts()
         observeData()
 
     }
 
     private fun observeData() {
-        viewModel.products.observe(viewLifecycleOwner) {
+        viewModel.homeState.observe(viewLifecycleOwner) { state ->
             binding.apply {
-                when (it) {
-                    Resource.Loading -> {
+                when (state) {
+                    HomeState.Loading -> {
                         binding.progressBar.visible()
                         cl.gone()
+                        clFail.gone()
                     }
 
-                    is Resource.Success -> {
+                    is HomeState.SuccessScreen -> {
                         binding.progressBar.gone()
+                        clFail.gone()
                         cl.visible()
-                        productAdapter.submitList(it.data)
-                        saleProductAdapter.submitSaleProductList(it.data)
+                        productAdapter.submitList(state.products)
+                        saleProductAdapter.submitSaleProductList(state.products)
                     }
 
-                    is Resource.Fail -> {
+                    is HomeState.EmptyScreen -> {
                         binding.progressBar.gone()
-                        cl.visible()
-                        Snackbar.make(requireView(), it.failMessage, 2000).show()
+                        cl.gone()
+                        clFail.visible()
+                        tvFail.text = state.failMessage
                     }
 
-                    is Resource.Error -> {
+                    is HomeState.PopUpScreen -> {
                         binding.progressBar.gone()
-                        cl.visible()
-                        Snackbar.make(requireView(), it.errorMessage, 2000).show()
+                        cl.gone()
+                        clFail.visible()
+                        //POP UP GOSTER
+                        //tvFail.text = state.errorMessage
                     }
                 }
             }
