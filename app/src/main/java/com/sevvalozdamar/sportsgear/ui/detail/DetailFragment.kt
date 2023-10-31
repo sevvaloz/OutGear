@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentDetailBinding
-import com.sevvalozdamar.sportsgear.utils.Resource
+import com.sevvalozdamar.sportsgear.utils.PopupHelper
 import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.invisible
 import com.sevvalozdamar.sportsgear.utils.viewBinding
@@ -26,19 +26,21 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getProductDetail(args.id)
-        observe()
-
-        binding.ivBack.setOnClickListener {
-            val fragmentManager = requireActivity().supportFragmentManager
-            fragmentManager.popBackStack()
+        with(binding){
+            ivBack.setOnClickListener {
+                val fragmentManager = requireActivity().supportFragmentManager
+                fragmentManager.popBackStack()
+            }
         }
 
+        viewModel.getProductDetail(args.id)
+        observe()
     }
 
     private fun observe() {
         viewModel.detailState.observe(viewLifecycleOwner) { state ->
             binding.apply {
+
                 when (state) {
                     DetailState.Loading -> {
                         progressBar.visible()
@@ -61,12 +63,18 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         if (state.product.saleState) {
                             itemPrice.text = "$${state.product.salePrice}"
                             itemOldPrice.text = state.product.price.toString()
-                            itemOldPrice.paintFlags =
-                                itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                            itemOldPrice.paintFlags = itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                             itemOldPrice.visible()
                         } else {
                             itemPrice.text = "$${state.product.price}"
                             itemOldPrice.invisible()
+                        }
+                        ivFav.setBackgroundResource(
+                            if(state.product.isFav) R.drawable.asset_favorite
+                            else R.drawable.asset_favorite_border
+                        )
+                        ivFav.setOnClickListener {
+                            viewModel.setFavoriteState(state.product)
                         }
                     }
 
@@ -81,8 +89,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         binding.progressBar.gone()
                         cl.gone()
                         clFail.visible()
-                        //POP UP GOSTER
-                        //tvFail.text = state.errorMessage
+                        PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
             }

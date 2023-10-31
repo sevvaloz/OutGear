@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="180dp"
     android:layout_height="265dp"
     android:padding="10dp"
@@ -26,10 +25,11 @@
 
         <TextView
             android:id="@+id/item_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="item title item title item title item title"
@@ -47,9 +47,8 @@
             android:layout_marginStart="4dp"
             android:text="9.99"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/item_old_price"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_old_price">
+            app:layout_constraintTop_toBottomOf="@+id/item_title">
 
         </TextView>
 
@@ -58,11 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
             android:text="10.99"
             android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/item_price"
             app:layout_constraintStart_toEndOf="@+id/item_price"
-            app:layout_constraintTop_toBottomOf="@+id/item_title">
+            app:layout_constraintTop_toTopOf="@+id/item_price">
 
         </TextView>
 
@@ -83,7 +82,7 @@
         </RatingBar>
 
         <ImageButton
-            android:id="@+id/button_add_to_card"
+            android:id="@+id/btn_card"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="4dp"
@@ -100,18 +99,17 @@
 
         </ImageButton>
 
-        <ImageButton
-            android:id="@+id/button_add_to_fav"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+        <ImageView
+            android:id="@+id/btn_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="#00000000"
             android:src="@drawable/asset_favorite_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </ImageButton>
+        </ImageView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

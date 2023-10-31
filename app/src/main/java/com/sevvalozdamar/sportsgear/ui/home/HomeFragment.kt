@@ -7,8 +7,10 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sevvalozdamar.sportsgear.R
+import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.databinding.FragmentHomeBinding
 import com.sevvalozdamar.sportsgear.ui.MainActivity
+import com.sevvalozdamar.sportsgear.utils.PopupHelper
 import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.utils.visible
@@ -19,8 +21,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val viewModel by viewModels<HomeViewModel>()
-    private val productAdapter = ProductAdapter(onProductClick = ::onProductClick)
-    private val saleProductAdapter = ProductAdapter(onProductClick = ::onProductClick)
+    private val productAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick)
+    private val saleProductAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,7 +38,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.getProducts()
         observeData()
-
     }
 
     private fun observeData() {
@@ -68,8 +69,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         binding.progressBar.gone()
                         cl.gone()
                         clFail.visible()
-                        //POP UP GOSTER
-                        //tvFail.text = state.errorMessage
+                        PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
             }
@@ -78,6 +78,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun onProductClick(id: Int) {
         findNavController().navigate(HomeFragmentDirections.homeToDetail(id))
+    }
+
+    private fun onFavClick(product: ProductUI) {
+        viewModel.setFavoriteState(product)
     }
 
     private fun signOut() {

@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sevvalozdamar.sportsgear.data.model.Product
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.data.repository.ProductRepository
-import com.sevvalozdamar.sportsgear.ui.home.HomeState
 import com.sevvalozdamar.sportsgear.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,10 +28,19 @@ class DetailViewModel @Inject constructor(private val productRepository: Product
         }
     }
 
+    fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
+        if (product.isFav) {
+            productRepository.deleteFromFavorites(product)
+        } else {
+            productRepository.addToFavorites(product)
+        }
+        getProductDetail(product.id)
+    }
+
 }
 
 sealed interface DetailState {
-    object Loading : DetailState
+    data object Loading : DetailState
     data class SuccessScreen(val product: ProductUI) : DetailState
     data class PopUpScreen(val errorMessage: String) : DetailState
     data class EmptyScreen(val failMessage: String) : DetailState

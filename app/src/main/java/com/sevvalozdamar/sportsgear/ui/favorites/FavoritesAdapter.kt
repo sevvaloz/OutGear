@@ -1,4 +1,4 @@
-package com.sevvalozdamar.sportsgear.ui.home
+package com.sevvalozdamar.sportsgear.ui.favorites
 
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -9,36 +9,36 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
+import com.sevvalozdamar.sportsgear.databinding.ItemFavProductBinding
 import com.sevvalozdamar.sportsgear.databinding.ItemProductBinding
 import com.sevvalozdamar.sportsgear.utils.invisible
 import com.sevvalozdamar.sportsgear.utils.visible
 
-class ProductAdapter(
+class FavoritesAdapter(
     private val onProductClick: (Int) -> Unit,
-    private val onFavClick: (ProductUI) -> Unit
-) : ListAdapter<ProductUI, ProductAdapter.ProductViewHolder>(ProductDiffUtilCallBack()) {
+    private val onDeleteClick: (ProductUI) -> Unit
+) : ListAdapter<ProductUI, FavoritesAdapter.FavoritesViewHolder>(ProductDiffUtilCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(
-            ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
+        return FavoritesViewHolder(
+            ItemFavProductBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onProductClick,
-            onFavClick
+            onDeleteClick
         )
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) =
         holder.bind(getItem(position))
 
-    class ProductViewHolder(
-        private val binding: ItemProductBinding,
+    class FavoritesViewHolder(
+        private val binding: ItemFavProductBinding,
         private val onProductClick: (Int) -> Unit,
-        private val onFavClick: (ProductUI) -> Unit
+        private val onDeleteClick: (ProductUI) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: ProductUI) {
             with(binding) {
                 itemTitle.text = product.title
-                ratingBar.rating = product.rate.toFloat()
                 Glide.with(itemImage).load(product.imageOne).into(itemImage)
                 if (product.saleState) {
                     itemPrice.text = "$${product.salePrice}"
@@ -49,17 +49,12 @@ class ProductAdapter(
                     itemPrice.text = "$${product.price}"
                     itemOldPrice.invisible()
                 }
-                btnFav.setBackgroundResource(
-                    if(product.isFav) R.drawable.asset_favorite
-                    else R.drawable.asset_favorite_border
-                )
 
                 root.setOnClickListener {
                     onProductClick(product.id)
                 }
-
-                btnFav.setOnClickListener {
-                    onFavClick(product)
+                btnDeleteFav.setOnClickListener {
+                    onDeleteClick(product)
                 }
             }
         }
@@ -75,9 +70,4 @@ class ProductAdapter(
         }
     }
 
-    private var saleProductList: List<ProductUI>? = null
-    fun submitSaleProductList(products: List<ProductUI>) {
-        saleProductList = products.filter { it.saleState }
-        submitList(saleProductList)
-    }
 }

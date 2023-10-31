@@ -8,7 +8,6 @@ import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.data.model.User
 import com.sevvalozdamar.sportsgear.data.repository.FirebaseAuthenticator
 import com.sevvalozdamar.sportsgear.data.repository.ProductRepository
-import com.sevvalozdamar.sportsgear.ui.detail.DetailState
 import com.sevvalozdamar.sportsgear.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -35,7 +34,7 @@ class HomeViewModel @Inject constructor(
     fun getProducts() = viewModelScope.launch {
         _homeState.value = HomeState.Loading
         _homeState.value = when (val result = productRepository.getProducts()) {
-            Resource.Loading ->  HomeState.Loading
+            Resource.Loading -> HomeState.Loading
             is Resource.Success -> HomeState.SuccessScreen(result.data)
             is Resource.Fail -> HomeState.EmptyScreen(result.failMessage)
             is Resource.Error -> HomeState.PopUpScreen(result.errorMessage)
@@ -46,10 +45,19 @@ class HomeViewModel @Inject constructor(
         firebaseAuthenticator.signOut()
     }
 
+    fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
+        if (product.isFav) {
+            productRepository.deleteFromFavorites(product)
+        } else {
+            productRepository.addToFavorites(product)
+        }
+        getProducts()
+    }
+
 }
 
 sealed interface HomeState {
-    object Loading : HomeState
+    data object Loading : HomeState
     data class SuccessScreen(val products: List<ProductUI>) : HomeState
     data class PopUpScreen(val errorMessage: String) : HomeState
     data class EmptyScreen(val failMessage: String) : HomeState

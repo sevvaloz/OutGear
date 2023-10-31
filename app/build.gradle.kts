@@ -56,7 +56,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-
     //hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
@@ -75,9 +74,9 @@ dependencies {
     implementation("com.squareup.okhttp:okhttp:2.7.5")
 
     //room
-    implementation("androidx.room:room-runtime:2.5.2")
-    implementation("androidx.room:room-ktx:2.5.2")
-    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-runtime:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")
 
     //glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
@@ -98,5 +97,4 @@ dependencies {
 
     //live data
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-
 }
