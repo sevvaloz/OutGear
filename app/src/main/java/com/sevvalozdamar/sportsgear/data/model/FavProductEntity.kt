@@ -4,12 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "fav_products")
+@Entity(tableName = "fav_products", primaryKeys = ["productId", "userId"])
 data class FavProductEntity(
 
-    @PrimaryKey
     @ColumnInfo(name = "productId")
-    val productId: Int?,
+    val productId: Int,
 
     @ColumnInfo(name = "category")
     val category: String?,
@@ -42,5 +41,8 @@ data class FavProductEntity(
     val saleState: Boolean?,
 
     @ColumnInfo(name = "title")
-    val title: String?
+    val title: String?,
+
+    @ColumnInfo(name = "userId")
+    val userId: String
 )

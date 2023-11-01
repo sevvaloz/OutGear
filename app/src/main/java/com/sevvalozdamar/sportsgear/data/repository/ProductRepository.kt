@@ -12,13 +12,14 @@ import kotlinx.coroutines.withContext
 
 class ProductRepository(
     private val productService: ProductService,
-    private val productDao: ProductDao
+    private val productDao: ProductDao,
+    private val firebaseAuthenticator: FirebaseAuthenticator
 ) {
 
     suspend fun getProducts(): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
         try {
             val response = productService.getProducts().body()
-            val favorites = productDao.getProductIds()
+            val favorites = productDao.getFavoriteIds(firebaseAuthenticator.getFirebaseUserUid())
 
             if (response?.status == 200) {
                 Resource.Success(response.products.orEmpty().mapToProductUI(favorites))
@@ -33,7 +34,7 @@ class ProductRepository(
     suspend fun getProductDetail(id: Int): Resource<ProductUI> = withContext(Dispatchers.IO) {
         try {
             val response = productService.getProductDetail(id).body()
-            val favorites = productDao.getProductIds()
+            val favorites = productDao.getFavoriteIds(firebaseAuthenticator.getFirebaseUserUid())
 
             if ((response?.status == 200) && (response.product != null)) {
                 Resource.Success(response.product.mapToProductUI(favorites))
@@ -46,20 +47,20 @@ class ProductRepository(
     }
 
     suspend fun addToFavorites(product: ProductUI) {
-        productDao.addToFavorites(product.mapToFavProductEntity())
+        productDao.addToFavorites(product.mapToFavProductEntity(firebaseAuthenticator.getFirebaseUserUid()))
     }
 
     suspend fun deleteFromFavorites(product: ProductUI) {
-        productDao.deleteFromFavorites(product.mapToFavProductEntity())
+        productDao.deleteFromFavorites(product.mapToFavProductEntity(firebaseAuthenticator.getFirebaseUserUid()))
     }
 
     suspend fun deleteAllFavorites(products: List<ProductUI>) {
-        productDao.deleteAllFavorites(products.mapToProductEntity())
+        productDao.deleteAllFavorites(products.mapToProductEntity(firebaseAuthenticator.getFirebaseUserUid()))
     }
 
     suspend fun getFavorites(): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
         try {
-            val favorites = productDao.getFavorites()
+            val favorites = productDao.getFavorites(firebaseAuthenticator.getFirebaseUserUid())
 
             if (favorites.isNotEmpty()) {
                 Resource.Success(favorites.mapToProductUI())

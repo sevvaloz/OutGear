@@ -40,7 +40,7 @@ fun List<Product>.mapToProductUI(favorites: List<Int>) =
         )
     }
 
-fun ProductUI.mapToFavProductEntity() =
+fun ProductUI.mapToFavProductEntity(uid: String) =
     FavProductEntity(
         category = this.category,
         count = this.count,
@@ -53,7 +53,8 @@ fun ProductUI.mapToFavProductEntity() =
         rate = this.rate,
         salePrice = this.salePrice,
         saleState = this.saleState,
-        title = this.title
+        title = this.title,
+        userId = uid
     )
 
 fun List<FavProductEntity>.mapToProductUI() =
@@ -62,7 +63,7 @@ fun List<FavProductEntity>.mapToProductUI() =
             category = it.category.orEmpty(),
             count = it.count ?: 0,
             description = it.description.orEmpty(),
-            id = it.productId ?: 1,
+            id = it.productId,
             imageOne = it.imageOne.orEmpty(),
             imageThree = it.imageTwo.orEmpty(),
             imageTwo = it.imageThree.orEmpty(),
@@ -74,7 +75,7 @@ fun List<FavProductEntity>.mapToProductUI() =
         )
     }
 
-fun List<ProductUI>.mapToProductEntity() =
+fun List<ProductUI>.mapToProductEntity(uid: String) =
     map{
         FavProductEntity(
             category = it.category,
@@ -88,6 +89,7 @@ fun List<ProductUI>.mapToProductEntity() =
             rate = it.rate,
             salePrice = it.salePrice,
             saleState = it.saleState,
-            title = it.title
+            title = it.title,
+            userId = uid
         )
     }

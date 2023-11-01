@@ -10,8 +10,8 @@ import com.sevvalozdamar.sportsgear.data.model.FavProductEntity
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM fav_products")
-    suspend fun getFavorites(): List<FavProductEntity>
+    @Query("SELECT * FROM fav_products WHERE userId = :userId")
+    suspend fun getFavorites(userId: String): List<FavProductEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addToFavorites(favProduct: FavProductEntity)
@@ -22,6 +22,6 @@ interface ProductDao {
     @Delete
     suspend fun deleteAllFavorites(favProducts: List<FavProductEntity>)
 
-    @Query("SELECT productId FROM fav_products")
-    suspend fun getProductIds(): List<Int>
+    @Query("SELECT productId FROM fav_products WHERE userId = :userId")
+    suspend fun getFavoriteIds(userId: String): List<Int>
 }
