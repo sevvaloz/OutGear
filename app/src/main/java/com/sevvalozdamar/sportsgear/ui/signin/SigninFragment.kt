@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -58,13 +59,17 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
                     is Resource.Fail -> {
                         binding.progressBar.gone()
                         cl.visible()
-                        Snackbar.make(requireView(), it.failMessage, 2000).show()
+                        Snackbar.make(requireView(), it.failMessage, 2000)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                            .show()
                     }
 
                     is Resource.Error -> {
                         binding.progressBar.gone()
                         cl.visible()
-                        Snackbar.make(requireView(), it.errorMessage, 2000).show()
+                        Snackbar.make(requireView(), it.errorMessage, 2000)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                            .show()
                     }
                 }
             }
@@ -74,17 +79,23 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
     private fun checkFields(email: String, password: String): Boolean {
         binding.apply {
             if (email.isEmpty()) {
-                Snackbar.make(requireView(), "Fill the blanks", 2000).show()
+                Snackbar.make(requireView(), "Fill the blanks", 2000)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                    .show()
                 return false
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Snackbar.make(requireView(), "Invalid e-mail format", 2000).show()
+                Snackbar.make(requireView(), "Invalid e-mail format", 2000)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                    .show()
                 return false
             }
 
             if (password.length < 6) {
-                Snackbar.make(requireView(), "Password must be minimum 6 characters", 2000).show()
+                Snackbar.make(requireView(), "Password must be minimum 6 characters", 2000)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                    .show()
                 return false
             }
         }

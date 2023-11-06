@@ -3,12 +3,12 @@ package com.sevvalozdamar.sportsgear.ui.cart
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentCartBinding
-import com.sevvalozdamar.sportsgear.ui.home.AddToCartState
 import com.sevvalozdamar.sportsgear.utils.PopupHelper
 import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.viewBinding
@@ -22,6 +22,8 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private val viewModel by viewModels<CartViewModel>()
     private val adapter =
         CartAdapter(onProductClick = ::onProductClick, onDeleteClick = ::onDeleteClick)
+
+    var totalPrice = 0.0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,6 +52,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                         rvCartProduct.gone()
                         clFail.gone()
                         ivClearCart.gone()
+                        btnPay.gone()
+                        tvTotal.gone()
+                        tvTotalStr.gone()
                     }
 
                     is CartState.SuccessScreen -> {
@@ -57,7 +62,23 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                         clFail.gone()
                         rvCartProduct.visible()
                         ivClearCart.visible()
+                        btnPay.visible()
+                        tvTotal.visible()
+                        tvTotalStr.visible()
+
+                        if(state.products.isEmpty()){
+                            btnPay.gone()
+                            tvTotal.gone()
+                            tvTotalStr.gone()
+                        }
+
                         adapter.submitList(state.products)
+
+                        totalPrice = state.products.sumOf {
+                            if(it.saleState) it.salePrice
+                            else it.price
+                        }
+                        tvTotal.text = String.format("$%.2f", totalPrice)
                     }
 
                     is CartState.EmptyScreen -> {
@@ -65,6 +86,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                         rvCartProduct.gone()
                         ivClearCart.gone()
                         clFail.visible()
+                        btnPay.gone()
+                        tvTotal.gone()
+                        tvTotalStr.gone()
                         tvFail.text = state.failMessage
                     }
 
@@ -73,64 +97,84 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                         rvCartProduct.gone()
                         ivClearCart.gone()
                         clFail.visible()
+                        btnPay.gone()
+                        tvTotal.gone()
+                        tvTotalStr.gone()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
             }
         }
 
-        viewModel.deleteFromCartState.observe(viewLifecycleOwner){ state ->
+        viewModel.deleteFromCartState.observe(viewLifecycleOwner) { state ->
             binding.apply {
-                when(state){
+                when (state) {
                     DeleteCartState.Loading -> {
                         progressBar.visible()
                         clFail.gone()
+                        rvCartProduct.visible()
                     }
 
                     is DeleteCartState.SuccessMessage -> {
                         progressBar.gone()
                         clFail.gone()
-                        Snackbar.make(requireView(), state.message, 1000).show()
+                        rvCartProduct.visible()
+                        Snackbar.make(requireView(), state.message, 1000)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.success))
+                            .show()
                     }
 
                     is DeleteCartState.FailMessage -> {
                         progressBar.gone()
-                        clFail.gone()
-                        Snackbar.make(requireView(), state.failMessage, 1000).show()
+                        clFail.visible()
+                        rvCartProduct.gone()
+                        Snackbar.make(requireView(), state.failMessage, 1000)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                            .show()
                     }
 
                     is DeleteCartState.PopUpScreen -> {
                         progressBar.gone()
                         clFail.visible()
+                        rvCartProduct.gone()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
             }
         }
 
-        viewModel.clearCartState.observe(viewLifecycleOwner){ state ->
+        viewModel.clearCartState.observe(viewLifecycleOwner) { state ->
             binding.apply {
-                when(state){
+                when (state) {
                     DeleteCartState.Loading -> {
                         progressBar.visible()
                         clFail.gone()
+                        rvCartProduct.gone()
                     }
 
                     is DeleteCartState.SuccessMessage -> {
                         progressBar.gone()
                         clFail.gone()
-                        Snackbar.make(requireView(), state.message, 1000).show()
+                        rvCartProduct.visible()
+
+                        Snackbar.make(requireView(), state.message, 1000)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.success))
+                            .show()
                     }
 
                     is DeleteCartState.FailMessage -> {
                         progressBar.gone()
                         clFail.gone()
-                        Snackbar.make(requireView(), state.failMessage, 1000).show()
+                        rvCartProduct.gone()
+                        Snackbar.make(requireView(), state.failMessage, 1000)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                            .show()
                     }
 
                     is DeleteCartState.PopUpScreen -> {
                         progressBar.gone()
                         clFail.visible()
+                        rvCartProduct.gone()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
