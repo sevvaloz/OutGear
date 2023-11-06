@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.databinding.FragmentHomeBinding
@@ -21,8 +22,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val viewModel by viewModels<HomeViewModel>()
-    private val productAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick)
-    private val saleProductAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick)
+    private val productAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick, onCartClick = ::onCartClick)
+    private val saleProductAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick, onCartClick = ::onCartClick)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,13 +46,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.apply {
                 when (state) {
                     HomeState.Loading -> {
-                        binding.progressBar.visible()
+                        progressBar.visible()
                         cl.gone()
                         clFail.gone()
                     }
 
                     is HomeState.SuccessScreen -> {
-                        binding.progressBar.gone()
+                        progressBar.gone()
                         clFail.gone()
                         cl.visible()
                         productAdapter.submitList(state.products)
@@ -59,14 +60,46 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
 
                     is HomeState.EmptyScreen -> {
-                        binding.progressBar.gone()
+                        progressBar.gone()
                         cl.gone()
                         clFail.visible()
                         tvFail.text = state.failMessage
                     }
 
                     is HomeState.PopUpScreen -> {
-                        binding.progressBar.gone()
+                        progressBar.gone()
+                        cl.gone()
+                        clFail.visible()
+                        PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
+                    }
+                }
+            }
+        }
+
+        viewModel.addToCartState.observe(viewLifecycleOwner){ state ->
+            binding.apply {
+                when(state){
+                    AddToCartState.Loading -> {
+                        cl.gone()
+                        clFail.gone()
+                    }
+
+                    is AddToCartState.SuccessMessage -> {
+                        progressBar.gone()
+                        clFail.gone()
+                        cl.visible()
+                        Snackbar.make(requireView(), state.message, 1000).show()
+                    }
+
+                    is AddToCartState.FailMessage -> {
+                        progressBar.gone()
+                        clFail.gone()
+                        cl.visible()
+                        Snackbar.make(requireView(), state.failMessage, 1000).show()
+                    }
+
+                    is AddToCartState.PopUpScreen -> {
+                        progressBar.gone()
                         cl.gone()
                         clFail.visible()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
@@ -82,6 +115,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun onFavClick(product: ProductUI) {
         viewModel.setFavoriteState(product)
+    }
+
+    private fun onCartClick(productId: Int){
+        viewModel.addToCart(productId)
     }
 
     private fun signOut() {

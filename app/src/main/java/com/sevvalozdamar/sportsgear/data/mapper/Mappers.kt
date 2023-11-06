@@ -4,6 +4,7 @@ import com.sevvalozdamar.sportsgear.data.model.FavProductEntity
 import com.sevvalozdamar.sportsgear.data.model.Product
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
 
+// get product detail
 fun Product.mapToProductUI(favorites: List<Int>) =
     ProductUI(
         category = this.category.orEmpty(),
@@ -21,6 +22,7 @@ fun Product.mapToProductUI(favorites: List<Int>) =
         isFav = favorites.contains(this.id)
     )
 
+//get products
 fun List<Product>.mapToProductUI(favorites: List<Int>) =
     map {
         ProductUI(
@@ -40,6 +42,7 @@ fun List<Product>.mapToProductUI(favorites: List<Int>) =
         )
     }
 
+//add favorites, delete from favorites
 fun ProductUI.mapToFavProductEntity(uid: String) =
     FavProductEntity(
         category = this.category,
@@ -57,6 +60,7 @@ fun ProductUI.mapToFavProductEntity(uid: String) =
         userId = uid
     )
 
+//get favorites
 fun List<FavProductEntity>.mapToProductUI() =
     map {
         ProductUI(
@@ -75,6 +79,7 @@ fun List<FavProductEntity>.mapToProductUI() =
         )
     }
 
+//delete all favorites
 fun List<ProductUI>.mapToProductEntity(uid: String) =
     map{
         FavProductEntity(

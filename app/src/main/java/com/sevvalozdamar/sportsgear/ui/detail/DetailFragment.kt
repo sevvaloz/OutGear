@@ -7,8 +7,12 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentDetailBinding
+import com.sevvalozdamar.sportsgear.ui.cart.CartViewModel
+import com.sevvalozdamar.sportsgear.ui.home.AddToCartState
+import com.sevvalozdamar.sportsgear.ui.home.HomeViewModel
 import com.sevvalozdamar.sportsgear.utils.PopupHelper
 import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.invisible
@@ -21,6 +25,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private val binding by viewBinding(FragmentDetailBinding::bind)
     private val viewModel by viewModels<DetailViewModel>()
+    private val homeViewModel by viewModels<HomeViewModel>()
     private val args by navArgs<DetailFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,6 +35,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             ivBack.setOnClickListener {
                 val fragmentManager = requireActivity().supportFragmentManager
                 fragmentManager.popBackStack()
+            }
+            btnAddToCart.setOnClickListener {
+                homeViewModel.addToCart(args.id)
             }
         }
 
@@ -87,6 +95,38 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
                     is DetailState.PopUpScreen -> {
                         binding.progressBar.gone()
+                        cl.gone()
+                        clFail.visible()
+                        PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
+                    }
+                }
+            }
+        }
+
+        homeViewModel.addToCartState.observe(viewLifecycleOwner){ state ->
+            binding.apply {
+                when(state){
+                    AddToCartState.Loading -> {
+                        cl.gone()
+                        clFail.gone()
+                    }
+
+                    is AddToCartState.SuccessMessage -> {
+                        progressBar.gone()
+                        clFail.gone()
+                        cl.visible()
+                        Snackbar.make(requireView(), state.message, 1000).show()
+                    }
+
+                    is AddToCartState.FailMessage -> {
+                        progressBar.gone()
+                        clFail.gone()
+                        cl.visible()
+                        Snackbar.make(requireView(), state.failMessage, 1000).show()
+                    }
+
+                    is AddToCartState.PopUpScreen -> {
+                        progressBar.gone()
                         cl.gone()
                         clFail.visible()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)

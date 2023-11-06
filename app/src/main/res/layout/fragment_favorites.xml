@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_navigation"
-        tools:listitem="@layout/item_fav_product" />
+        tools:listitem="@layout/item_product" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

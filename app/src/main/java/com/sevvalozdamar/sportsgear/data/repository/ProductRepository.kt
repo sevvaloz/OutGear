@@ -3,6 +3,10 @@ package com.sevvalozdamar.sportsgear.data.repository
 import com.sevvalozdamar.sportsgear.data.mapper.mapToFavProductEntity
 import com.sevvalozdamar.sportsgear.data.mapper.mapToProductEntity
 import com.sevvalozdamar.sportsgear.data.mapper.mapToProductUI
+import com.sevvalozdamar.sportsgear.data.model.AddToCartRequest
+import com.sevvalozdamar.sportsgear.data.model.BaseResponse
+import com.sevvalozdamar.sportsgear.data.model.ClearCartRequest
+import com.sevvalozdamar.sportsgear.data.model.DeleteFromCartRequest
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.data.source.local.ProductDao
 import com.sevvalozdamar.sportsgear.data.source.remote.ProductService
@@ -46,15 +50,15 @@ class ProductRepository(
         }
     }
 
-    suspend fun addToFavorites(product: ProductUI) {
+    suspend fun addToFavorites(product: ProductUI) = withContext(Dispatchers.IO) {
         productDao.addToFavorites(product.mapToFavProductEntity(firebaseAuthenticator.getFirebaseUserUid()))
     }
 
-    suspend fun deleteFromFavorites(product: ProductUI) {
+    suspend fun deleteFromFavorites(product: ProductUI) = withContext(Dispatchers.IO) {
         productDao.deleteFromFavorites(product.mapToFavProductEntity(firebaseAuthenticator.getFirebaseUserUid()))
     }
 
-    suspend fun deleteAllFavorites(products: List<ProductUI>) {
+    suspend fun deleteAllFavorites(products: List<ProductUI>) = withContext(Dispatchers.IO) {
         productDao.deleteAllFavorites(products.mapToProductEntity(firebaseAuthenticator.getFirebaseUserUid()))
     }
 
@@ -66,6 +70,73 @@ class ProductRepository(
                 Resource.Success(favorites.mapToProductUI())
             } else {
                 Resource.Fail("This place looks empty.. Start with adding your favorite products.")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun addToCart(productId: Int): Resource<String> = withContext(Dispatchers.IO) {
+        try {
+            val request = AddToCartRequest(firebaseAuthenticator.getFirebaseUserUid(), productId)
+            val response = productService.addToCart(request)
+
+            if (response.status == 200 && response.message != null) {
+                //if product is successfully added to cart
+                Resource.Success(response.message)
+            } else {
+                //if product is already in the cart
+                Resource.Fail(response.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+
+    suspend fun getCartProducts(): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
+        try {
+            val response = productService.getCartProducts(firebaseAuthenticator.getFirebaseUserUid()).body()
+            val favorites = productDao.getFavoriteIds(firebaseAuthenticator.getFirebaseUserUid())
+
+            if ((response?.status == 200) && (response.products != null)) {
+                Resource.Success(response.products.mapToProductUI(favorites))
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun deleteFromCart(productId: Int): Resource<String> = withContext(Dispatchers.IO) {
+        try {
+            val request = DeleteFromCartRequest(productId)
+            val response = productService.deleteFromCart(request)
+
+            if (response.status == 200) {
+                //if product is successfully deleted from cart
+                Resource.Success(response.message.orEmpty())
+            } else {
+                //if product not found in the cart
+                Resource.Fail(response.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun clearCart(): Resource<String> = withContext(Dispatchers.IO) {
+        try {
+            val request = ClearCartRequest(firebaseAuthenticator.getFirebaseUserUid())
+            val response = productService.clearCart(request)
+
+            if (response.status == 200) {
+                //if cart is successfully cleared
+                Resource.Success(response.message.orEmpty())
+            } else {
+                //if cart is not cleaned
+                Resource.Fail(response.message.orEmpty())
             }
         } catch (e: Exception) {
             Resource.Error(e.message.orEmpty())

@@ -25,6 +25,9 @@ class HomeViewModel @Inject constructor(
     private val _user = MutableLiveData<Resource<User>>()
     val user: LiveData<Resource<User>> = _user
 
+    private var _addToCartState = MutableLiveData<AddToCartState>()
+    val addToCartState: LiveData<AddToCartState> get() = _addToCartState
+
     init {
         viewModelScope.launch {
             _user.value = Resource.Success(firebaseAuthenticator.getCurrentUser())
@@ -54,6 +57,17 @@ class HomeViewModel @Inject constructor(
         getProducts()
     }
 
+
+    fun addToCart(productId: Int) = viewModelScope.launch{
+        _addToCartState.value = when (val result = productRepository.addToCart(productId)) {
+            Resource.Loading -> AddToCartState.Loading
+            is Resource.Success -> AddToCartState.SuccessMessage(result.data)
+            is Resource.Fail -> AddToCartState.FailMessage(result.failMessage)
+            is Resource.Error -> AddToCartState.PopUpScreen(result.errorMessage)
+        }
+    }
+
+
 }
 
 sealed interface HomeState {
@@ -61,4 +75,11 @@ sealed interface HomeState {
     data class SuccessScreen(val products: List<ProductUI>) : HomeState
     data class PopUpScreen(val errorMessage: String) : HomeState
     data class EmptyScreen(val failMessage: String) : HomeState
+}
+
+sealed interface AddToCartState {
+    data object Loading : AddToCartState
+    data class SuccessMessage(val message: String) : AddToCartState
+    data class FailMessage(val failMessage: String) : AddToCartState
+    data class PopUpScreen(val errorMessage: String) : AddToCartState
 }

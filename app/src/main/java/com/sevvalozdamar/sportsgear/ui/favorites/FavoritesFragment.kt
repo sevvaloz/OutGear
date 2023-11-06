@@ -1,7 +1,5 @@
 package com.sevvalozdamar.sportsgear.ui.favorites
 
-import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -54,7 +52,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                         adapter.submitList(state.products)
 
                         ivDeleteAllFavorites.setOnClickListener {
-                            PopupHelper.showDeletePopup(requireContext(), onYesClicked = {
+                            PopupHelper.showDeleteFavPopup(requireContext(), onYesClicked = {
                                 viewModel.deleteAllFavorites(state.products)
                             })
                         }

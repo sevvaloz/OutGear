@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
-import com.sevvalozdamar.sportsgear.databinding.ItemFavProductBinding
 import com.sevvalozdamar.sportsgear.databinding.ItemProductBinding
 import com.sevvalozdamar.sportsgear.utils.invisible
 import com.sevvalozdamar.sportsgear.utils.visible
@@ -21,7 +19,7 @@ class FavoritesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
         return FavoritesViewHolder(
-            ItemFavProductBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onProductClick,
             onDeleteClick
         )
@@ -31,7 +29,7 @@ class FavoritesAdapter(
         holder.bind(getItem(position))
 
     class FavoritesViewHolder(
-        private val binding: ItemFavProductBinding,
+        private val binding: ItemProductBinding,
         private val onProductClick: (Int) -> Unit,
         private val onDeleteClick: (ProductUI) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -53,7 +51,7 @@ class FavoritesAdapter(
                 root.setOnClickListener {
                     onProductClick(product.id)
                 }
-                btnDeleteFav.setOnClickListener {
+                btnDelete.setOnClickListener {
                     onDeleteClick(product)
                 }
             }

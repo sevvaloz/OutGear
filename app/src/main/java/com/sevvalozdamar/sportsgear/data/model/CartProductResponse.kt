@@ -1,5 +1,5 @@
 package com.sevvalozdamar.sportsgear.data.model
 
-data class ProductResponse(
+data class CartProductResponse(
     val products: List<Product>?
 ): BaseResponse()

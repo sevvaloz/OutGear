@@ -75,6 +75,9 @@
         <action
             android:id="@+id/cart_to_payment"
             app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/cart_to_detail"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
