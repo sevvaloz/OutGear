@@ -1,4 +1,4 @@
-package com.sevvalozdamar.sportsgear.ui
+package com.sevvalozdamar.sportsgear.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

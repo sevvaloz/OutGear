@@ -45,7 +45,7 @@ class ProductAdapter(
                 Glide.with(itemImage).load(product.imageOne).into(itemImage)
                 if (product.saleState) {
                     itemPrice.text = "$${product.salePrice}"
-                    itemOldPrice.text = product.price.toString()
+                    itemOldPrice.text = "$${product.price}"
                     itemOldPrice.paintFlags = itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     itemOldPrice.visible()
                 } else {

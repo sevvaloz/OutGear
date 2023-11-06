@@ -61,12 +61,12 @@
                 android:id="@+id/tv_sale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D I S C O U N T E D   P R O D U C T S"
+                android:layout_marginStart="8dp"
+                android:text="Flash sale"
                 android:textAlignment="center"
                 android:textColor="@color/dark_green"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
 
@@ -84,7 +84,7 @@
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/black"
                 android:layout_margin="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/rv_sales_product"
@@ -96,13 +96,13 @@
                 android:id="@+id/tv_products"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="D I S C O V E R   A L L   P R O D U C T S"
+                android:text="Discover"
                 android:textAlignment="center"
                 android:textColor="@color/dark_green"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_sales_product" />
 

@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.databinding.FragmentHomeBinding
-import com.sevvalozdamar.sportsgear.ui.MainActivity
+import com.sevvalozdamar.sportsgear.ui.main.MainActivity
 import com.sevvalozdamar.sportsgear.utils.PopupHelper
 import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.viewBinding

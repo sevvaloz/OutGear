@@ -65,13 +65,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         itemTitle.text = state.product.title
                         itemDescription.text = state.product.description
                         itemCategory.text = "${state.product.category}"
-                        itemRate.text = "(${state.product.rate})"
+                        itemRate.text = "${state.product.rate}"
                         ratingBar.rating = state.product.rate.toFloat()
                         itemStock.text = "${state.product.count} items left in stock."
                         Glide.with(itemImage).load(state.product.imageOne).into(itemImage)
                         if (state.product.saleState) {
                             itemPrice.text = "$${state.product.salePrice}"
-                            itemOldPrice.text = state.product.price.toString()
+                            itemOldPrice.text = "$${state.product.price}"
                             itemOldPrice.paintFlags = itemOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                             itemOldPrice.visible()
                         } else {

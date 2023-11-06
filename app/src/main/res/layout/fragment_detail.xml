@@ -75,6 +75,7 @@
             android:text="item title item title item title item title item title item title"
             android:textAlignment="center"
             android:textSize="18sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_image">
@@ -88,9 +89,10 @@
             android:layout_marginStart="8dp"
             android:text="9.99"
             android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/item_old_price"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_to_cart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_old_price">
+            app:layout_constraintTop_toTopOf="@+id/btn_add_to_cart">
 
         </TextView>
 
@@ -98,12 +100,11 @@
             android:id="@+id/item_old_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="10.99"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/item_price"
-            app:layout_constraintTop_toBottomOf="@+id/item_title">
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/item_price"
+            app:layout_constraintStart_toStartOf="@+id/item_price">
 
         </TextView>
 
@@ -112,14 +113,14 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             android:numStars="5"
             android:progressTint="@color/orange"
             android:secondaryProgressTint="#00000000"
             android:stepSize="0.1"
-            app:layout_constraintBottom_toBottomOf="@+id/item_old_price"
-            app:layout_constraintEnd_toStartOf="@+id/item_rate"
-            app:layout_constraintTop_toTopOf="@+id/item_old_price">
+            app:layout_constraintBottom_toBottomOf="@+id/item_rate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/item_rate">
 
         </RatingBar>
 
@@ -127,12 +128,13 @@
             android:id="@+id/item_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="(4.5)"
+            android:layout_marginEnd="4dp"
+            android:text="4.5"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rating_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rating_bar">
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/item_stock"
+            app:layout_constraintEnd_toStartOf="@+id/rating_bar"
+            app:layout_constraintTop_toTopOf="@+id/item_stock">
 
         </TextView>
 
@@ -156,6 +158,7 @@
             android:id="@+id/nsv_desc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_add_to_cart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -165,37 +168,47 @@
                 android:id="@+id/item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
                 android:layout_marginVertical="5dp"
+                android:paddingHorizontal="8dp"
                 android:text="item description item description item description item description item description item description"
                 android:textAlignment="textStart"
+                android:textColor="@color/black"
                 android:textSize="15sp">
 
             </TextView>
         </androidx.core.widget.NestedScrollView>
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_add_to_cart"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/detail_button_background"
-            android:src="@drawable/asset_add_shopping_cart"
+            android:text="ADD TO CART"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/item_price"
+            app:layout_constraintTop_toBottomOf="@+id/nsv_desc" />
 
         <TextView
             android:id="@+id/item_stock"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:text="x items left in stock."
+            android:textColor="@color/black"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+            app:layout_constraintBottom_toTopOf="@+id/line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_title" />
 
+        <!--
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="20dp"
@@ -204,17 +217,20 @@
             android:layout_marginVertical="5dp"
             android:src="@drawable/asset_shopping_cart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_price" />
+            app:layout_constraintTop_toBottomOf="@+id/item_title" />
+
+         -->
 
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="8dp"
             android:background="@color/black"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_stock" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

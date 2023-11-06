@@ -24,6 +24,7 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     private var _clearCartState = MutableLiveData<DeleteCartState>()
     val clearCartState: LiveData<DeleteCartState> get() = _clearCartState
 
+
     fun getCartProducts() = viewModelScope.launch {
         _cartState.value = CartState.Loading
         _cartState.value = when (val result = productRepository.getCartProducts()) {
@@ -53,7 +54,6 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
         }
         getCartProducts()
     }
-
 }
 
 sealed interface CartState {

@@ -22,8 +22,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private val viewModel by viewModels<CartViewModel>()
     private val adapter =
         CartAdapter(onProductClick = ::onProductClick, onDeleteClick = ::onDeleteClick)
-
-    var totalPrice = 0.0
+    private var totalPrice = 0.0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,7 +39,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
         viewModel.getCartProducts()
         observeData()
-
     }
 
     private fun observeData() {
@@ -181,7 +179,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             }
         }
     }
-
 
     private fun onProductClick(id: Int) {
         findNavController().navigate(CartFragmentDirections.cartToDetail(id))
