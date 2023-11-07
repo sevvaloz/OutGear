@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentDetailBinding
-import com.sevvalozdamar.sportsgear.ui.cart.CartViewModel
 import com.sevvalozdamar.sportsgear.ui.home.AddToCartState
 import com.sevvalozdamar.sportsgear.ui.home.HomeViewModel
 import com.sevvalozdamar.sportsgear.utils.PopupHelper

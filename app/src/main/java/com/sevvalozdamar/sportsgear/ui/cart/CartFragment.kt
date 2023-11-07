@@ -76,7 +76,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                             if(it.saleState) it.salePrice
                             else it.price
                         }
+
                         tvTotal.text = String.format("$%.2f", totalPrice)
+
+                        btnPay.setOnClickListener {
+                            findNavController().navigate(CartFragmentDirections.cartToPayment(String.format("$%.2f", totalPrice)))
+                        }
                     }
 
                     is CartState.EmptyScreen -> {
