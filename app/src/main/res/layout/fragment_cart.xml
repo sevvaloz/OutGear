@@ -111,7 +111,7 @@
             android:layout_height="100dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/asset_add_favorites"
+            android:src="@drawable/asset_add_shopping_cart"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

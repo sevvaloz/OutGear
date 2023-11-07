@@ -115,7 +115,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                     DeleteCartState.Loading -> {
                         progressBar.visible()
                         clFail.gone()
-                        rvCartProduct.visible()
+                        rvCartProduct.gone()
                     }
 
                     is DeleteCartState.SuccessMessage -> {

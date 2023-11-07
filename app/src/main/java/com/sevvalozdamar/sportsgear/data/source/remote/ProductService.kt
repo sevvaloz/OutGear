@@ -7,6 +7,7 @@ import com.sevvalozdamar.sportsgear.data.model.ClearCartRequest
 import com.sevvalozdamar.sportsgear.data.model.DeleteFromCartRequest
 import com.sevvalozdamar.sportsgear.data.model.ProductDetailResponse
 import com.sevvalozdamar.sportsgear.data.model.ProductResponse
+import com.sevvalozdamar.sportsgear.data.model.SearchProductResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -32,5 +33,8 @@ interface ProductService {
 
     @POST("clear_cart.php")
     suspend fun clearCart(@Body clearCartRequest: ClearCartRequest): BaseResponse
+
+    @GET("search_product.php")
+    suspend fun searchProduct(@Query("query") query: String): Response<SearchProductResponse>
 
 }

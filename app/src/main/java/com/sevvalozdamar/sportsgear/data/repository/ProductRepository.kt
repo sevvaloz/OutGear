@@ -4,7 +4,6 @@ import com.sevvalozdamar.sportsgear.data.mapper.mapToFavProductEntity
 import com.sevvalozdamar.sportsgear.data.mapper.mapToProductEntity
 import com.sevvalozdamar.sportsgear.data.mapper.mapToProductUI
 import com.sevvalozdamar.sportsgear.data.model.AddToCartRequest
-import com.sevvalozdamar.sportsgear.data.model.BaseResponse
 import com.sevvalozdamar.sportsgear.data.model.ClearCartRequest
 import com.sevvalozdamar.sportsgear.data.model.DeleteFromCartRequest
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
@@ -69,7 +68,7 @@ class ProductRepository(
             if (favorites.isNotEmpty()) {
                 Resource.Success(favorites.mapToProductUI())
             } else {
-                Resource.Fail("This place looks empty.. Start with adding your favorite products.")
+                Resource.Fail("There are no products in your favorites")
             }
         } catch (e: Exception) {
             Resource.Error(e.message.orEmpty())
@@ -137,6 +136,21 @@ class ProductRepository(
             } else {
                 //if cart is not cleaned
                 Resource.Fail(response.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun getSearchProduct(query: String): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
+        try {
+            val response = productService.searchProduct(query).body()
+            val favorites = productDao.getFavoriteIds(firebaseAuthenticator.getFirebaseUserUid())
+
+            if ((response?.status == 200) && (response.products != null)) {
+                Resource.Success(response.products.mapToProductUI(favorites))
+            } else {
+                Resource.Fail(response?.message.orEmpty())
             }
         } catch (e: Exception) {
             Resource.Error(e.message.orEmpty())
