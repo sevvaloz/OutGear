@@ -43,15 +43,16 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
             btnAddToCart.setOnClickListener {
                 homeViewModel.addToCart(args.id)
+                observeCartData()
             }
 
         }
 
         viewModel.getProductDetail(args.id)
-        observe()
+        observeData()
     }
 
-    private fun observe() {
+    private fun observeData() {
         viewModel.detailState.observe(viewLifecycleOwner) { state ->
             binding.apply {
 
@@ -66,6 +67,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         binding.progressBar.gone()
                         clFail.gone()
                         cl.visible()
+                        btnAddToCart.visible()
+                        itemOldPrice.visible()
+                        itemPrice.visible()
 
                         itemTitle.text = state.product.title
                         itemDescription.text = state.product.description
@@ -111,50 +115,60 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
+            }
+        }
+    }
 
-                homeViewModel.addToCartState.observe(viewLifecycleOwner) { state ->
-                    binding.apply {
-                        when (state) {
-                            AddToCartState.Loading -> {
-                                cl.gone()
-                                clFail.gone()
-                            }
+    private fun observeCartData(){
+        homeViewModel.addToCartState.observe(viewLifecycleOwner) { state ->
+            binding.apply {
+                when (state) {
+                    AddToCartState.Loading -> {
+                        cl.gone()
+                        clFail.gone()
+                    }
 
-                            is AddToCartState.SuccessMessage -> {
-                                progressBar.gone()
-                                clFail.gone()
-                                cl.visible()
-                                Snackbar.make(requireView(), state.message, 1000)
-                                    .setBackgroundTint(
-                                        ContextCompat.getColor(
-                                            requireContext(),
-                                            R.color.success
-                                        )
-                                    )
-                                    .show()
-                            }
+                    is AddToCartState.SuccessMessage -> {
+                        progressBar.gone()
+                        clFail.gone()
+                        cl.visible()
+                        btnAddToCart.visible()
+                        itemOldPrice.visible()
+                        itemPrice.visible()
 
-                            is AddToCartState.FailMessage -> {
-                                progressBar.gone()
-                                clFail.gone()
-                                cl.visible()
-                                Snackbar.make(requireView(), state.failMessage, 1000)
-                                    .setBackgroundTint(
-                                        ContextCompat.getColor(
-                                            requireContext(),
-                                            R.color.warning
-                                        )
-                                    )
-                                    .show()
-                            }
+                        Snackbar.make(requireView(), state.message, 1000)
+                            .setBackgroundTint(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.success
+                                )
+                            )
+                            .show()
+                    }
 
-                            is AddToCartState.PopUpScreen -> {
-                                progressBar.gone()
-                                cl.gone()
-                                clFail.visible()
-                                PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
-                            }
-                        }
+                    is AddToCartState.FailMessage -> {
+                        progressBar.gone()
+                        clFail.gone()
+                        cl.visible()
+                        btnAddToCart.visible()
+                        itemOldPrice.visible()
+                        itemPrice.visible()
+
+                        Snackbar.make(requireView(), state.failMessage, 1000)
+                            .setBackgroundTint(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.warning
+                                )
+                            )
+                            .show()
+                    }
+
+                    is AddToCartState.PopUpScreen -> {
+                        progressBar.gone()
+                        cl.gone()
+                        clFail.visible()
+                        PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
             }

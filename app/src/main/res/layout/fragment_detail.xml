@@ -5,223 +5,237 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
     tools:context=".ui.detail.DetailFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl"
+
+    <ImageView
+        android:id="@+id/top_navigation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="60dp"
+        android:background="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/asset_back"
+        app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
+        app:layout_constraintStart_toStartOf="@+id/top_navigation"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/top_navigation"
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/iv_fav"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/asset_favorite_border"
+        app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="item category"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
+        app:layout_constraintEnd_toStartOf="@+id/iv_fav"
+        app:layout_constraintStart_toEndOf="@+id/iv_back"
+        app:layout_constraintTop_toTopOf="@+id/top_navigation">
+
+    </TextView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_to_cart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_navigation">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/orange"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            tools:context=".ui.detail.DetailFragment">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/asset_back"
-            app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
-            app:layout_constraintStart_toStartOf="@+id/top_navigation"
-            app:layout_constraintTop_toTopOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_images"
+                android:layout_width="match_parent"
+                android:layout_height="395dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_navigation"
+                tools:listitem="@layout/item_product_image" />
 
-        </ImageView>
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="item title item title item title item title item title item title"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_images">
 
-        <ImageView
-            android:id="@+id/iv_fav"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/asset_favorite_border"
-            app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
-            app:layout_constraintEnd_toEndOf="@+id/top_navigation"
-            app:layout_constraintTop_toTopOf="parent">
+            </TextView>
 
-        </ImageView>
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:numStars="5"
+                android:progressTint="@color/orange"
+                android:secondaryProgressTint="#00000000"
+                android:stepSize="0.1"
+                app:layout_constraintBottom_toBottomOf="@+id/item_rate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_title">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_images"
-            android:layout_width="match_parent"
-            android:layout_height="410dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_navigation"
-            tools:listitem="@layout/item_product_image"/>
+            </RatingBar>
 
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:padding="5dp"
-            android:text="item title item title item title item title item title item title"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_images">
+            <TextView
+                android:id="@+id/item_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:text="4.5"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@+id/rating_bar"
+                app:layout_constraintTop_toBottomOf="@+id/item_title">
 
-        </TextView>
+            </TextView>
 
-        <TextView
-            android:id="@+id/item_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="9.99"
-            android:textSize="22sp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_add_to_cart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_add_to_cart">
+            <TextView
+                android:id="@+id/item_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="x items left in stock"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_title" />
 
-        </TextView>
-
-        <TextView
-            android:id="@+id/item_old_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10.99"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/item_price"
-            app:layout_constraintStart_toStartOf="@+id/item_price">
-
-        </TextView>
-
-        <RatingBar
-            android:id="@+id/rating_bar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:numStars="5"
-            android:progressTint="@color/orange"
-            android:secondaryProgressTint="#00000000"
-            android:stepSize="0.1"
-            app:layout_constraintBottom_toBottomOf="@+id/item_rate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_rate">
-
-        </RatingBar>
-
-        <TextView
-            android:id="@+id/item_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:text="4.5"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/item_stock"
-            app:layout_constraintEnd_toStartOf="@+id/rating_bar"
-            app:layout_constraintTop_toTopOf="@+id/item_stock">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/item_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="item category"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
-            app:layout_constraintEnd_toStartOf="@+id/iv_fav"
-            app:layout_constraintStart_toEndOf="@+id/iv_back"
-            app:layout_constraintTop_toTopOf="@+id/top_navigation">
-
-        </TextView>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nsv_desc"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_add_to_cart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line">
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp"
+                android:background="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/item_stock"
+                tools:layout_editor_absoluteX="23dp" />
 
             <TextView
                 android:id="@+id/item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:paddingHorizontal="8dp"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp"
                 android:text="item description item description item description item description item description item description"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
-                android:textSize="15sp">
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line">
 
             </TextView>
-        </androidx.core.widget.NestedScrollView>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add_to_cart"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="ADD TO CART"
-            android:textAllCaps="false"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_price"
-            app:layout_constraintTop_toBottomOf="@+id/nsv_desc" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/item_stock"
-            android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="x items left in stock"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/line"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_title" />
+    <TextView
+        android:id="@+id/item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:text="9.99"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_add_to_cart">
 
-        <View
-            android:id="@+id/line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="8dp"
-            android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_stock" />
+    </TextView>
 
+    <TextView
+        android:id="@+id/item_old_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:text="10.99"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/item_price"
+        app:layout_constraintEnd_toEndOf="@+id/item_price"
+        app:layout_constraintStart_toStartOf="@+id/item_price"
+        app:layout_constraintTop_toTopOf="@+id/btn_add_to_cart">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </TextView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_to_cart"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/button_background"
+        android:text="ADD TO CART"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/item_price" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_fail"
@@ -259,16 +273,5 @@
             app:layout_constraintStart_toStartOf="@+id/iv_fail"
             app:layout_constraintTop_toBottomOf="@+id/iv_fail" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

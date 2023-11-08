@@ -18,7 +18,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(1500)
+            delay(3000)
             findNavController().navigate(R.id.splash_to_signin)
         }
     }

@@ -1,6 +1,7 @@
 package com.sevvalozdamar.sportsgear.ui.signin
 
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -86,6 +87,19 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         binding.apply {
             if (email.isEmpty() || password.isEmpty()) {
                 Snackbar.make(requireView(), "Fill the blanks", 2000)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                    .show()
+                return false
+            }
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Snackbar.make(requireView(), "Invalid e-mail format", 2000)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
+                    .show()
+                return false
+            }
+
+            if (password.length < 6) {
+                Snackbar.make(requireView(), "Password must be minimum 6 characters", 2000)
                     .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
                     .show()
                 return false

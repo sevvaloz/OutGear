@@ -33,8 +33,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="item title item title item title item title"
-            android:textColor="@color/black"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/item_image"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,12 +45,13 @@
             android:id="@+id/item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="9.99"
-            android:textSize="22sp"
             android:textColor="@color/black"
+            android:textSize="23sp"
             app:layout_constraintBottom_toBottomOf="@+id/item_image"
-            app:layout_constraintStart_toStartOf="@+id/item_old_price"
-            app:layout_constraintTop_toBottomOf="@+id/item_old_price">
+            app:layout_constraintStart_toEndOf="@+id/item_image"
+            app:layout_constraintTop_toTopOf="@+id/item_image">
 
         </TextView>
 
@@ -58,13 +59,13 @@
             android:id="@+id/item_old_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="4dp"
             android:text="10.99"
-            android:textSize="14sp"
             android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/item_image"
-            app:layout_constraintTop_toBottomOf="@+id/item_title">
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@+id/item_price"
+            app:layout_constraintStart_toEndOf="@+id/item_price"
+            app:layout_constraintTop_toTopOf="@+id/item_price">
 
         </TextView>
 

@@ -15,10 +15,10 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="230dp"
-            android:layout_height="220dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/app_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/app_logo_mini"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,10 +27,11 @@
             android:id="@+id/txt_welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Welcome Back"
             android:textAlignment="center"
-            android:textSize="23sp"
             android:textColor="@color/black"
+            android:textSize="23sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView">

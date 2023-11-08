@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/top_navigation"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginStart="12dp"
         android:clickable="true"
         android:focusable="true"

@@ -18,10 +18,6 @@ import com.sevvalozdamar.sportsgear.utils.gone
 import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -60,15 +56,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     HomeState.Loading -> {
                         progressBar.visible()
                         cl.gone()
-                        clFail.gone()
                     }
 
                     is HomeState.SuccessScreen -> {
-                        progressBar.gone()
-                        clFail.gone()
-                        cl.visible()
                         productAdapter.submitList(state.products)
                         saleProductAdapter.submitSaleProductList(state.products)
+
+                        progressBar.gone()
+                        cl.visible()
+                        tvProducts.visible()
+                        tvSale.visible()
+                        line.visible()
                     }
 
                     is HomeState.EmptyScreen -> {
@@ -81,7 +79,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     is HomeState.PopUpScreen -> {
                         progressBar.gone()
                         cl.gone()
-                        clFail.visible()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
@@ -94,18 +91,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     HomeState.Loading -> {
                         progressBar.visible()
                         cl.gone()
-                        clFail.gone()
                     }
                     is HomeState.SuccessScreen -> {
-                        progressBar.gone()
-                        clFail.gone()
-                        cl.visible()
                         productAdapter.submitList(state.products)
+
+                        progressBar.gone()
+                        cl.visible()
+                        tvProducts.visible()
+                        tvSale.visible()
+                        line.visible()
                     }
                     is HomeState.EmptyScreen -> {
                         progressBar.gone()
-                        clFail.gone()
-                        cl.visible()
+                        cl.gone()
                         Snackbar.make(requireView(), state.failMessage, 1000)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
                             .show()
@@ -113,7 +111,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     is HomeState.PopUpScreen -> {
                         progressBar.gone()
                         cl.gone()
-                        clFail.visible()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
@@ -128,18 +125,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     CategoryState.Loading -> {
                         progressBar.visible()
                         cl.gone()
-                        clFail.gone()
                     }
                     is CategoryState.SuccessScreen -> {
-                        progressBar.gone()
-                        clFail.gone()
-                        cl.visible()
                         categoryAdapter.submitList(state.categories)
+
+                        progressBar.gone()
+                        rvCategory.visible()
+                        cl.visible()
+                        tvProducts.visible()
+                        tvSale.visible()
+                        line.visible()
                     }
                     is CategoryState.FailMessage -> {
                         progressBar.gone()
-                        clFail.gone()
-                        cl.visible()
+                        cl.gone()
                         Snackbar.make(requireView(), state.failMessage, 1000)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
                             .show()
@@ -147,7 +146,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     is CategoryState.PopUpScreen -> {
                         progressBar.gone()
                         cl.gone()
-                        clFail.visible()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
@@ -161,6 +159,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 when(state){
                     Resource.Loading -> {
                         progressBar.visible()
+                        cl.gone()
                         tvHello.gone()
                     }
                     is Resource.Success -> {
@@ -170,6 +169,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
                     is Resource.Fail -> {
                         progressBar.gone()
+                        cl.gone()
                         tvHello.gone()
                         Snackbar.make(requireView(), state.failMessage, 1000)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
@@ -177,6 +177,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
                     is Resource.Error -> {
                         progressBar.gone()
+                        cl.gone()
                         tvHello.gone()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
@@ -192,13 +193,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     AddToCartState.Loading -> {
                         progressBar.visible()
                         cl.gone()
-                        clFail.gone()
                     }
 
                     is AddToCartState.SuccessMessage -> {
                         progressBar.gone()
-                        clFail.gone()
                         cl.visible()
+                        tvProducts.visible()
+                        tvSale.visible()
+                        line.visible()
                         Snackbar.make(requireView(), state.message, 1000)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.success))
                             .show()
@@ -206,8 +208,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                     is AddToCartState.FailMessage -> {
                         progressBar.gone()
-                        clFail.gone()
                         cl.visible()
+                        tvProducts.visible()
+                        tvSale.visible()
+                        line.visible()
                         Snackbar.make(requireView(), state.failMessage, 1000)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
                             .show()
@@ -216,7 +220,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     is AddToCartState.PopUpScreen -> {
                         progressBar.gone()
                         cl.gone()
-                        clFail.visible()
                         PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
                     }
                 }
