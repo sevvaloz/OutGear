@@ -19,13 +19,6 @@ class SignupViewModel @Inject constructor(
     private val _result = MutableLiveData<Resource<Unit>>()
     val result: LiveData<Resource<Unit>> = _result
 
-    private val _checkCurrentUser = MutableLiveData<Boolean>()
-    val checkCurrentUser: LiveData<Boolean> = _checkCurrentUser
-
-    init {
-        checkCurrentUser()
-    }
-
     fun signUpWithEmailAndPassword(user: User, password: String) {
         viewModelScope.launch {
             _result.value =
@@ -41,11 +34,4 @@ class SignupViewModel @Inject constructor(
                 }
         }
     }
-
-    private fun checkCurrentUser() {
-        viewModelScope.launch {
-            _checkCurrentUser.value = firebaseAuthenticator.isCurrentUserExist()
-        }
-    }
-
 }

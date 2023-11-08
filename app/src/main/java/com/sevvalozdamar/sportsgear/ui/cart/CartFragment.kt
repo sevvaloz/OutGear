@@ -33,6 +33,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             ivClearCart.setOnClickListener {
                 PopupHelper.showClearCartPopup(requireContext(), onYesClicked = {
                     viewModel.clearCart()
+                    observeClearCartData()
                 })
             }
         }
@@ -108,7 +109,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 }
             }
         }
+    }
 
+    private fun observeDeleteFromCartData(){
         viewModel.deleteFromCartState.observe(viewLifecycleOwner) { state ->
             binding.apply {
                 when (state) {
@@ -145,7 +148,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 }
             }
         }
+    }
 
+    private fun observeClearCartData(){
         viewModel.clearCartState.observe(viewLifecycleOwner) { state ->
             binding.apply {
                 when (state) {
@@ -191,6 +196,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private fun onDeleteClick(productId: Int) {
         viewModel.deleteFromCart(productId)
+        observeDeleteFromCartData()
     }
 
 }

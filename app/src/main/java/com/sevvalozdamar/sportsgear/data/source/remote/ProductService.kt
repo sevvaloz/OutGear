@@ -3,8 +3,10 @@ package com.sevvalozdamar.sportsgear.data.source.remote
 import com.sevvalozdamar.sportsgear.data.model.AddToCartRequest
 import com.sevvalozdamar.sportsgear.data.model.BaseResponse
 import com.sevvalozdamar.sportsgear.data.model.CartProductResponse
+import com.sevvalozdamar.sportsgear.data.model.CategoryResponse
 import com.sevvalozdamar.sportsgear.data.model.ClearCartRequest
 import com.sevvalozdamar.sportsgear.data.model.DeleteFromCartRequest
+import com.sevvalozdamar.sportsgear.data.model.ProductByCategoryResponse
 import com.sevvalozdamar.sportsgear.data.model.ProductDetailResponse
 import com.sevvalozdamar.sportsgear.data.model.ProductResponse
 import com.sevvalozdamar.sportsgear.data.model.SearchProductResponse
@@ -36,5 +38,11 @@ interface ProductService {
 
     @GET("search_product.php")
     suspend fun searchProduct(@Query("query") query: String): Response<SearchProductResponse>
+
+    @GET("get_categories.php")
+    suspend fun getCategories(): Response<CategoryResponse>
+
+    @GET("get_products_by_category.php")
+    suspend fun getProductsByCategory(@Query("category") category: String): Response<ProductByCategoryResponse>
 
 }

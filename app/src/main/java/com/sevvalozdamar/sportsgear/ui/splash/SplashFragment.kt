@@ -19,7 +19,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         CoroutineScope(Dispatchers.Main).launch {
             delay(1500)
-            findNavController().navigate(R.id.splash_to_signup)
+            findNavController().navigate(R.id.splash_to_signin)
         }
     }
 }

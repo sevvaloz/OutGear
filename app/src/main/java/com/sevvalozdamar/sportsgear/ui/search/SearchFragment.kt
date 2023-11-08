@@ -15,7 +15,6 @@ import com.sevvalozdamar.sportsgear.utils.viewBinding
 import com.sevvalozdamar.sportsgear.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
@@ -27,30 +26,36 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        with(binding){
+        with(binding) {
             rvSearchProduct.adapter = adapter
             svSearchProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (!query.isNullOrEmpty() && query.length>=3) {
-                        viewModel.getSearchProduct(query)
+                    if ((query?.length ?: 0) >= 3) {
+                        viewModel.getSearchProduct(query!!)
                         observeData()
+                    } else {
+                        rvSearchProduct.gone()
                     }
+
                     return false
                 }
+
                 override fun onQueryTextChange(newQuery: String?): Boolean {
-                    if (!newQuery.isNullOrEmpty() && newQuery.length>=3) {
+                    if (!newQuery.isNullOrEmpty() && newQuery.length >= 3) {
                         viewModel.getSearchProduct(newQuery)
                         observeData()
+                    } else if (newQuery!!.length<3) {
+                        rvSearchProduct.gone()
                     }
                     return false
                 }
             })
         }
+
         observeData()
     }
 
-    private fun observeData(){
+    private fun observeData() {
         viewModel.searchState.observe(viewLifecycleOwner) { state ->
             binding.apply {
                 when (state) {
@@ -90,4 +95,3 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
 }
-

@@ -19,6 +19,13 @@ class SigninViewModel @Inject constructor(
     private val _result = MutableLiveData<Resource<FirebaseUser>>()
     val result: LiveData<Resource<FirebaseUser>> = _result
 
+    private val _checkCurrentUser = MutableLiveData<Boolean>()
+    val checkCurrentUser: LiveData<Boolean> = _checkCurrentUser
+
+    init {
+        checkCurrentUser()
+    }
+
     fun signinWithEmailAndPassword(email: String, password: String) {
         viewModelScope.launch {
             _result.value = Resource.Success(
@@ -27,6 +34,12 @@ class SigninViewModel @Inject constructor(
                     password
                 ).user!!
             )
+        }
+    }
+
+    private fun checkCurrentUser() {
+        viewModelScope.launch {
+            _checkCurrentUser.value = firebaseAuthenticator.isCurrentUserExist()
         }
     }
 }

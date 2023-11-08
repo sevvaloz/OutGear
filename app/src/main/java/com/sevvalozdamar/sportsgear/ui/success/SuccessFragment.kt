@@ -6,7 +6,6 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.databinding.FragmentSuccessBinding
-import com.sevvalozdamar.sportsgear.ui.payment.PaymentFragmentDirections
 import com.sevvalozdamar.sportsgear.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

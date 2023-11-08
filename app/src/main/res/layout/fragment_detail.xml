@@ -54,17 +54,16 @@
 
         </ImageView>
 
-        <ImageView
-            android:id="@+id/item_image"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_marginTop="16dp"
-            android:src="@color/cardview_dark_background"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_images"
+            android:layout_width="match_parent"
+            android:layout_height="410dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_back">
-
-        </ImageView>
+            app:layout_constraintTop_toBottomOf="@+id/top_navigation"
+            tools:listitem="@layout/item_product_image"/>
 
         <TextView
             android:id="@+id/item_title"
@@ -78,7 +77,7 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_image">
+            app:layout_constraintTop_toBottomOf="@+id/rv_images">
 
         </TextView>
 
@@ -203,7 +202,7 @@
             android:layout_height="18dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="x items left in stock."
+            android:text="x items left in stock"
             android:textColor="@color/black"
             android:textSize="13sp"
             app:layout_constraintBottom_toTopOf="@+id/line"

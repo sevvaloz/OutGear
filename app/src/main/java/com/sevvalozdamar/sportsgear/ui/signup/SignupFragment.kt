@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -31,11 +30,13 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
 
         with(binding) {
             btnSignUp.setOnClickListener {
+                val name = etUserName.text.toString()
+                val surname = etUserSurname.text.toString()
                 val email = etEmail.text.toString()
                 val password = etPassword.text.toString()
 
-                if (checkFields(email, password)) {
-                    viewModel.signUpWithEmailAndPassword(User(email), password)
+                if (checkFields(name, surname, email, password)) {
+                    viewModel.signUpWithEmailAndPassword(User(name, surname, email), password)
                 }
             }
             txtToSignin.setOnClickListener {
@@ -49,11 +50,6 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
         with(binding) {
             with(viewModel) {
 
-                checkCurrentUser.observe(viewLifecycleOwner) {
-                    if (it) {
-                        findNavController().navigate(SignupFragmentDirections.signupToHome())
-                    }
-                }
                 result.observe(viewLifecycleOwner) {
                     when (it) {
                         Resource.Loading -> {
@@ -88,9 +84,9 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
         }
     }
 
-    private fun checkFields(email: String, password: String): Boolean {
+    private fun checkFields(name: String, surname: String, email: String, password: String): Boolean {
         binding.apply {
-            if (email.isEmpty()) {
+            if (name.isEmpty() || surname.isEmpty() || email.isEmpty()) {
                 Snackbar.make(requireView(), "Fill in the blanks", 2000)
                     .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
                     .show()

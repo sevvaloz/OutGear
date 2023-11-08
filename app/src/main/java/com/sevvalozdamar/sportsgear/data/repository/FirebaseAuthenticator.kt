@@ -15,7 +15,10 @@ class FirebaseAuthenticator @Inject constructor(
 
     suspend fun getCurrentUser(): User {
         val user = firestore.collection("users").document(getFirebaseUserUid()).get().await()
-        return User(user["email"] as String)
+        val name = user["name"] as String
+        val surname = user["surname"] as String
+        val email = user["email"] as String
+        return User(name, surname, email)
     }
 
     fun isCurrentUserExist() = auth.currentUser != null
@@ -27,6 +30,8 @@ class FirebaseAuthenticator @Inject constructor(
         auth.createUserWithEmailAndPassword(user.email, password).await()
         val userModel = hashMapOf(
             "id" to getFirebaseUserUid(),
+            "name" to user.name,
+            "surname"  to user.surname,
             "email" to user.email
         )
         firestore.collection("users").document(getFirebaseUserUid()).set(userModel).await()

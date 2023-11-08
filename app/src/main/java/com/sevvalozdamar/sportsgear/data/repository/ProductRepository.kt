@@ -92,7 +92,6 @@ class ProductRepository(
         }
     }
 
-
     suspend fun getCartProducts(): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
         try {
             val response = productService.getCartProducts(firebaseAuthenticator.getFirebaseUserUid()).body()
@@ -110,7 +109,7 @@ class ProductRepository(
 
     suspend fun deleteFromCart(productId: Int): Resource<String> = withContext(Dispatchers.IO) {
         try {
-            val request = DeleteFromCartRequest(productId)
+            val request = DeleteFromCartRequest(firebaseAuthenticator.getFirebaseUserUid(), productId)
             val response = productService.deleteFromCart(request)
 
             if (response.status == 200) {
@@ -145,6 +144,35 @@ class ProductRepository(
     suspend fun getSearchProduct(query: String): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
         try {
             val response = productService.searchProduct(query).body()
+            val favorites = productDao.getFavoriteIds(firebaseAuthenticator.getFirebaseUserUid())
+
+            if ((response?.status == 200) && (response.products != null)) {
+                Resource.Success(response.products.mapToProductUI(favorites))
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun getCategories(): Resource<List<String>> = withContext(Dispatchers.IO) {
+        try {
+            val response = productService.getCategories().body()
+
+            if (response?.status == 200 && (response.categories != null)) {
+                Resource.Success(response.categories)
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun getProductsByCategory(category: String): Resource<List<ProductUI>> = withContext(Dispatchers.IO) {
+        try {
+            val response = productService.getProductsByCategory(category).body()
             val favorites = productDao.getFavoriteIds(firebaseAuthenticator.getFirebaseUserUid())
 
             if ((response?.status == 200) && (response.products != null)) {

@@ -15,11 +15,10 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="230dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/app_logo"
-            android:paddingTop="30dp"
-            android:paddingHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,10 +27,10 @@
             android:id="@+id/txt_welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="Welcome Back"
             android:textAlignment="center"
-            android:textSize="27sp"
+            android:textSize="23sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -42,10 +41,11 @@
             android:id="@+id/txt_signin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="Sign in to continue."
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_welcome">
@@ -56,10 +56,10 @@
             android:id="@+id/til_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:paddingTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_signin">
@@ -69,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-Mail"
+                android:textColor="@color/black"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,10 +77,10 @@
             android:id="@+id/til_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:paddingBottom="5dp"
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:textColor="@color/black"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,12 +99,12 @@
             android:id="@+id/txt_to_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
+            android:padding="5dp"
             android:text="Don't have an account?"
             android:textAlignment="center"
-            android:textColor="#FF9800"
+            android:textColor="@color/orange"
             android:textSize="18sp"
-            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -116,11 +118,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background"
             android:text="Sign In"
             android:textAllCaps="false"
-            android:textSize="16sp"
             android:textColor="@color/white"
-            android:background="@drawable/button_background"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_to_signup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
