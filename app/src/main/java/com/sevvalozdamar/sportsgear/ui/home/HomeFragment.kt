@@ -235,8 +235,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.setFavoriteState(product)
     }
 
-    private fun onCartClick(productId: Int){
-        viewModel.addToCart(productId)
+    private fun onCartClick(product: ProductUI){
+        viewModel.addToCart(product.id)
         observeCartData()
     }
 

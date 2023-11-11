@@ -16,7 +16,7 @@ import com.sevvalozdamar.sportsgear.utils.visible
 class ProductAdapter(
     private val onProductClick: (Int) -> Unit,
     private val onFavClick: (ProductUI) -> Unit,
-    private val onCartClick: (Int) -> Unit
+    private val onCartClick: (ProductUI) -> Unit
 ) : ListAdapter<ProductUI, ProductAdapter.ProductViewHolder>(ProductDiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -35,7 +35,7 @@ class ProductAdapter(
         private val binding: ItemHomeProductBinding,
         private val onProductClick: (Int) -> Unit,
         private val onFavClick: (ProductUI) -> Unit,
-        private val onCartClick: (Int) -> Unit
+        private val onCartClick: (ProductUI) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: ProductUI) {
@@ -66,7 +66,7 @@ class ProductAdapter(
                 }
 
                 btnCard.setOnClickListener {
-                    onCartClick(product.id)
+                    onCartClick(product)
                 }
             }
         }

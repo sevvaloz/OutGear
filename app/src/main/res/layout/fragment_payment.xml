@@ -39,7 +39,7 @@
         android:paddingVertical="5dp"
         android:text="Card Details"
         android:textAlignment="textStart"
-        android:textColor="#FF9800"
+        android:textColor="@color/orange"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_total">
@@ -161,7 +161,7 @@
         android:paddingVertical="5dp"
         android:text="Address Details"
         android:textAlignment="textStart"
-        android:textColor="#FF9800"
+        android:textColor="@color/orange"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_credit_cart_month">

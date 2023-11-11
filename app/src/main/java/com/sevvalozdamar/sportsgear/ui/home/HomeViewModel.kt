@@ -8,7 +8,6 @@ import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.data.model.User
 import com.sevvalozdamar.sportsgear.data.repository.FirebaseAuthenticator
 import com.sevvalozdamar.sportsgear.data.repository.ProductRepository
-import com.sevvalozdamar.sportsgear.ui.detail.DetailState
 import com.sevvalozdamar.sportsgear.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -63,7 +62,6 @@ class HomeViewModel @Inject constructor(
         }
         getProducts()
     }
-
 
     fun addToCart(productId: Int) = viewModelScope.launch{
         _addToCartState.value =  AddToCartState.Loading

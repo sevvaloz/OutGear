@@ -45,7 +45,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 homeViewModel.addToCart(args.id)
                 observeCartData()
             }
-
         }
 
         viewModel.getProductDetail(args.id)

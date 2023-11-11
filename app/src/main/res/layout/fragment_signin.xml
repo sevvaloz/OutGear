@@ -15,8 +15,9 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,2:1"
             android:layout_marginTop="32dp"
             android:src="@drawable/app_logo_mini"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +33,7 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="23sp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_signin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -43,10 +45,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Sign in to continue."
+            android:text="Sign in to continue"
             android:textAlignment="center"
-            android:textSize="16sp"
             android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/til_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_welcome">
