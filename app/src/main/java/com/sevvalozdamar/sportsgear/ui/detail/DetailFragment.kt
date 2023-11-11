@@ -69,6 +69,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         btnAddToCart.visible()
                         itemOldPrice.visible()
                         itemPrice.visible()
+                        itemCategory.visible()
 
                         itemTitle.text = state.product.title
                         itemDescription.text = state.product.description
@@ -77,9 +78,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         ratingBar.rating = state.product.rate.toFloat()
                         itemStock.text = "${state.product.count} items left in stock"
 
-                        //
-                        imageAdapter.submitList(listOf(state.product.imageOne, state.product.imageTwo, state.product.imageThree))
-
+                        imageAdapter.submitList(
+                            listOf(
+                                state.product.imageOne,
+                                state.product.imageTwo,
+                                state.product.imageThree
+                            )
+                        )
 
                         if (state.product.saleState) {
                             itemPrice.text = "$${state.product.salePrice}"
@@ -97,6 +102,33 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         )
                         ivFav.setOnClickListener {
                             viewModel.setFavoriteState(state.product)
+                            if (state.product.isFav) {
+                                Snackbar.make(
+                                    requireView(),
+                                    "${state.product.title} is deleted from favorites",
+                                    1000
+                                )
+                                    .setBackgroundTint(
+                                        ContextCompat.getColor(
+                                            requireContext(),
+                                            R.color.success
+                                        )
+                                    )
+                                    .show()
+                            } else if (!state.product.isFav) {
+                                Snackbar.make(
+                                    requireView(),
+                                    "${state.product.title} is added to favorites",
+                                    1000
+                                )
+                                    .setBackgroundTint(
+                                        ContextCompat.getColor(
+                                            requireContext(),
+                                            R.color.success
+                                        )
+                                    )
+                                    .show()
+                            }
                         }
                     }
 
@@ -118,7 +150,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun observeCartData(){
+    private fun observeCartData() {
         homeViewModel.addToCartState.observe(viewLifecycleOwner) { state ->
             binding.apply {
                 when (state) {

@@ -3,8 +3,10 @@ package com.sevvalozdamar.sportsgear.ui.favorites
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.databinding.FragmentFavoritesBinding
@@ -54,6 +56,18 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                         ivDeleteAllFavorites.setOnClickListener {
                             PopupHelper.showDeleteFavPopup(requireContext(), onYesClicked = {
                                 viewModel.deleteAllFavorites(state.products)
+                                Snackbar.make(
+                                    requireView(),
+                                    "Favorites cleared",
+                                    1000
+                                )
+                                    .setBackgroundTint(
+                                        ContextCompat.getColor(
+                                            requireContext(),
+                                            R.color.success
+                                        )
+                                    )
+                                    .show()
                             })
                         }
                     }
@@ -84,6 +98,18 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private fun onDeleteClick(product: ProductUI) {
         viewModel.deleteFromFavorites(product)
+        Snackbar.make(
+            requireView(),
+            "${product.title} is deleted from favorites",
+            1000
+        )
+            .setBackgroundTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.success
+                )
+            )
+            .show()
     }
 
 }

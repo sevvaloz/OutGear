@@ -233,6 +233,33 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun onFavClick(product: ProductUI) {
         viewModel.setFavoriteState(product)
+        if (product.isFav) {
+            Snackbar.make(
+                requireView(),
+                "${product.title} is deleted from favorites",
+                1000
+            )
+                .setBackgroundTint(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.success
+                    )
+                )
+                .show()
+        } else if (!product.isFav) {
+            Snackbar.make(
+                requireView(),
+                "${product.title} is added to favorites",
+                1000
+            )
+                .setBackgroundTint(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.success
+                    )
+                )
+                .show()
+        }
     }
 
     private fun onCartClick(product: ProductUI){

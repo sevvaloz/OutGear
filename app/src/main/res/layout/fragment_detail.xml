@@ -54,6 +54,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/top_navigation"
         app:layout_constraintEnd_toStartOf="@+id/iv_fav"
         app:layout_constraintStart_toEndOf="@+id/iv_back"
