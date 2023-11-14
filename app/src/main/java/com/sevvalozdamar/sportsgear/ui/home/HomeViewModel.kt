@@ -34,6 +34,7 @@ class HomeViewModel @Inject constructor(
     private var _productByCategoryState = MutableLiveData<HomeState>()
     val productByCategoryState: LiveData<HomeState> get() = _productByCategoryState
 
+
     init {
         viewModelScope.launch {
             _user.value = Resource.Success(firebaseAuthenticator.getCurrentUser())
@@ -92,7 +93,6 @@ class HomeViewModel @Inject constructor(
             is Resource.Error -> HomeState.PopUpScreen(result.errorMessage)
         }
     }
-
 }
 
 sealed interface HomeState {

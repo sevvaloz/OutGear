@@ -189,5 +189,4 @@ class ProductRepository(
                 Resource.Error(e.message.orEmpty())
             }
         }
-
 }
