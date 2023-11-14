@@ -34,3 +34,5 @@
 <img src='https://github.com/sevvaloz/OutGear/assets/70901471/c3a48933-03bc-4c1a-b391-b849faa28528' width='310' height='650'>
 
 ## Demo Video
+[<img src="https://img.youtube.com/vi/GmX_9uH7YtA/hqdefault.jpg" width="600" height="300"
+/>](https://www.youtube.com/embed/GmX_9uH7YtA)
