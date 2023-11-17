@@ -35,3 +35,6 @@
 
 ## Demo Video
 [<img src="https://img.youtube.com/vi/GmX_9uH7YtA/hqdefault.jpg" width="800" height="450"/>](https://www.youtube.com/embed/GmX_9uH7YtA)
+
+## Presentation File
+https://docs.google.com/presentation/d/1mLvaHs-CtWEvd_i4xaWTHLZK9vANptCs/edit?usp=sharing&ouid=114502975451362089998&rtpof=true&sd=true
