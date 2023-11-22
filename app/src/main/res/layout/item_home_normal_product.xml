@@ -2,9 +2,10 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="185dp"
-    android:layout_height="265dp"
-    android:layout_margin="8dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="200dp"
+    android:layout_height="300dp"
+    android:layout_margin="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,10 +13,10 @@
 
         <ImageView
             android:id="@+id/item_image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@color/cardview_dark_background"
+            app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -44,11 +45,11 @@
             android:id="@+id/item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:text="9.99"
-            android:textSize="15sp"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="15sp"
+
+            app:layout_constraintStart_toStartOf="@+id/item_title"
             app:layout_constraintTop_toBottomOf="@+id/item_title">
 
         </TextView>
@@ -58,10 +59,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="10.99"
-            android:textSize="11sp"
             android:paddingEnd="3dp"
+            android:text="10.99"
             android:textColor="@color/black"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/item_price"
             app:layout_constraintStart_toEndOf="@+id/item_price"
             app:layout_constraintTop_toTopOf="@+id/item_price">
@@ -88,12 +89,14 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/home_button_background"
             android:text="ADD TO CART"
             android:textAllCaps="false"
-            android:textSize="13sp"
             android:textColor="@color/black"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

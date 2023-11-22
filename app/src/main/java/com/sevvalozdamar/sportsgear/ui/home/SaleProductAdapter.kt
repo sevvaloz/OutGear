@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
-import com.sevvalozdamar.sportsgear.databinding.ItemHomeNormalProductBinding
+import com.sevvalozdamar.sportsgear.databinding.ItemHomeSaleProductBinding
 import com.sevvalozdamar.sportsgear.utils.invisible
 import com.sevvalozdamar.sportsgear.utils.visible
 
-class ProductAdapter(
+class SaleProductAdapter(
     private val onProductClick: (Int) -> Unit,
     private val onFavClick: (ProductUI) -> Unit,
     private val onCartClick: (ProductUI) -> Unit
-) : ListAdapter<ProductUI, ProductAdapter.ProductViewHolder>(ProductDiffUtilCallBack()) {
+) : ListAdapter<ProductUI, SaleProductAdapter.ProductViewHolder>(ProductDiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
-            ItemHomeNormalProductBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            ItemHomeSaleProductBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onProductClick,
             onFavClick,
             onCartClick
@@ -32,7 +32,7 @@ class ProductAdapter(
         holder.bind(getItem(position))
 
     class ProductViewHolder(
-        private val binding: ItemHomeNormalProductBinding,
+        private val binding: ItemHomeSaleProductBinding,
         private val onProductClick: (Int) -> Unit,
         private val onFavClick: (ProductUI) -> Unit,
         private val onCartClick: (ProductUI) -> Unit
@@ -80,5 +80,11 @@ class ProductAdapter(
         override fun areContentsTheSame(oldItem: ProductUI, newItem: ProductUI): Boolean {
             return oldItem == newItem
         }
+    }
+
+    private var saleProductList: List<ProductUI>? = null
+    fun submitSaleProductList(products: List<ProductUI>) {
+        saleProductList = products.filter { it.saleState }
+        submitList(saleProductList)
     }
 }

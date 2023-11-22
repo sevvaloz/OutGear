@@ -93,19 +93,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_sale"
-                tools:listitem="@layout/item_home_product" />
-
-            <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="8dp"
-                android:background="@color/black"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/rv_sales_product"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_sales_product" />
+                tools:listitem="@layout/item_home_sale_product" />
 
             <TextView
                 android:id="@+id/tv_products"
@@ -136,8 +124,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_product"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -146,7 +134,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_category"
                 app:spanCount="2"
-                tools:listitem="@layout/item_home_product" />
+                tools:listitem="@layout/item_home_normal_product" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

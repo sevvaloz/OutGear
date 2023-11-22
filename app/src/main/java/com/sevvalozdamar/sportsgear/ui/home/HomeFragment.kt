@@ -25,7 +25,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val viewModel by viewModels<HomeViewModel>()
     private val productAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick, onCartClick = ::onCartClick)
-    private val saleProductAdapter = ProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick, onCartClick = ::onCartClick)
+    private val saleProductAdapter = SaleProductAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick, onCartClick = ::onCartClick)
     private val categoryAdapter = CategoryAdapter(onCategoryClick = ::onCategoryClick)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +66,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         cl.visible()
                         tvProducts.visible()
                         tvSale.visible()
-                        line.visible()
                     }
 
                     is HomeState.EmptyScreen -> {
@@ -99,7 +98,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         cl.visible()
                         tvProducts.visible()
                         tvSale.visible()
-                        line.visible()
                     }
                     is HomeState.EmptyScreen -> {
                         progressBar.gone()
@@ -134,7 +132,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         cl.visible()
                         tvProducts.visible()
                         tvSale.visible()
-                        line.visible()
                     }
                     is CategoryState.FailMessage -> {
                         progressBar.gone()
@@ -200,7 +197,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         cl.visible()
                         tvProducts.visible()
                         tvSale.visible()
-                        line.visible()
                         Snackbar.make(requireView(), state.message, 1000)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.success))
                             .show()
@@ -211,7 +207,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         cl.visible()
                         tvProducts.visible()
                         tvSale.visible()
-                        line.visible()
                         Snackbar.make(requireView(), state.failMessage, 1000)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
                             .show()
