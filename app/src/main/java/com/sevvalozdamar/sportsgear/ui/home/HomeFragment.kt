@@ -1,6 +1,5 @@
 package com.sevvalozdamar.sportsgear.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -11,7 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.sevvalozdamar.sportsgear.R
 import com.sevvalozdamar.sportsgear.data.model.ProductUI
 import com.sevvalozdamar.sportsgear.databinding.FragmentHomeBinding
-import com.sevvalozdamar.sportsgear.ui.main.MainActivity
+import com.sevvalozdamar.sportsgear.ui.payment.PaymentFragmentDirections
 import com.sevvalozdamar.sportsgear.utils.PopupHelper
 import com.sevvalozdamar.sportsgear.utils.Resource
 import com.sevvalozdamar.sportsgear.utils.gone
@@ -32,21 +31,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-
             rvProduct.adapter = productAdapter
             rvCategory.adapter = categoryAdapter
             rvSalesProduct.adapter = saleProductAdapter
-
-            ivLogout.setOnClickListener {
-                signOut()
-            }
         }
 
         viewModel.getProducts()
         viewModel.getCategories()
         observeData()
         observeCategoryData()
-        observeUser()
     }
 
     private fun observeData() {
@@ -150,39 +143,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun observeUser(){
-        binding.apply {
-            viewModel.user.observe(viewLifecycleOwner){ state ->
-                when(state){
-                    Resource.Loading -> {
-                        progressBar.visible()
-                        cl.gone()
-                        tvHello.gone()
-                    }
-                    is Resource.Success -> {
-                        progressBar.gone()
-                        tvHello.visible()
-                        tvHello.text = "Hello ${state.data.name}"
-                    }
-                    is Resource.Fail -> {
-                        progressBar.gone()
-                        cl.gone()
-                        tvHello.gone()
-                        Snackbar.make(requireView(), state.failMessage, 1000)
-                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.warning))
-                            .show()
-                    }
-                    is Resource.Error -> {
-                        progressBar.gone()
-                        cl.gone()
-                        tvHello.gone()
-                        PopupHelper.showErrorPopup(requireContext(), state.errorMessage)
-                    }
-                }
-            }
-        }
-    }
-
     private fun observeCartData(){
         viewModel.addToCartState.observe(viewLifecycleOwner){ state ->
             binding.apply {
@@ -265,12 +225,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun onCategoryClick(category: String){
         viewModel.getProductsByCategory(category)
         println(category)
-    }
-
-    private fun signOut() {
-        requireActivity().finish()
-        viewModel.signOut()
-        startActivity(Intent(requireActivity(), MainActivity::class.java))
     }
 
 }

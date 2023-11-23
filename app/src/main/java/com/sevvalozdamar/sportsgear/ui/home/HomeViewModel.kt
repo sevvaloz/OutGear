@@ -51,10 +51,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun signOut() = viewModelScope.launch {
-        firebaseAuthenticator.signOut()
-    }
-
     fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
         if (product.isFav) {
             productRepository.deleteFromFavorites(product)

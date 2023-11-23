@@ -34,9 +34,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-
             rvImages.adapter = imageAdapter
-
             ivBack.setOnClickListener {
                 val fragmentManager = requireActivity().supportFragmentManager
                 fragmentManager.popBackStack()

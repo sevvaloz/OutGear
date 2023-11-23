@@ -47,7 +47,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
-        android:text="Continue Shopping"
+        android:text="CONTINUE SHOPPING"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
